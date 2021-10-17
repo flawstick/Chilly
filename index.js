@@ -2,7 +2,7 @@
 const fs = require('fs');
 const { Client, Intents, Collection } = require('discord.js');
 const { REST } = require('@discordjs/rest');
-const { token, clientId, guildId } = require('./config.json');
+const { token, clientId, guildId, verify } = require('./config.json');
 const { Routes } = require('discord-api-types/v9');
 const { freemem } = require('os');
 
@@ -11,26 +11,38 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 
 // Command collection (extends map)
 client.commands = new Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
-// Initialize command collection
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	// Set a new item in the Collection
-	// With the key as the command name and the value as the exported module
-	client.commands.set(command.data.name, command);
-}
+commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 // Array of commands for JSON
 const commands = [];
 
-// Fill the array
+// Initialize command collection
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
+
+	// Set a new item in the Collection
+	// With the key as the command name and the value as the exported module
+	client.commands.set(command.data.name, command);
+
 	// Add everything into a
 	// Json file to reload commands
 	commands.push(command.data.toJSON());
 }
+
+// Make collection for verifacation command
+client.verify = new Collection();
+
+// Get verify file
+const command = require(`./verify/verify.js`);
+	
+// Set a new item in the Collection
+// With the key as the command name and the value as the exported module
+client.verify.set(command.data.name, command);
+
+// Add everything into a
+// Json format to reload commands
+commands.push(command.data.toJSON());
+
 
 // Rest disocrd API	
 const rest = new REST({version: '9'}).setToken(token);
@@ -38,12 +50,11 @@ const rest = new REST({version: '9'}).setToken(token);
 // Asynchronously reload slash commands
 (async () => {
 	try {
-
 		// Start reload
 		console.log('Reloading Slash Commands');
 		await rest.put(
 			Routes.applicationGuildCommands(clientId, guildId),
-			{body: commands}
+			{ body: commands }
 			);
 		
 		// End reload
@@ -60,18 +71,29 @@ freemem(commandFiles);
 // Register commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
+	if (interaction.channel.name === verify) return;
 
     // Get command by name
 	const command = client.commands.get(interaction.commandName);
     if (!command) return;
 
-    // Try to execute and return error message
-    try {
-        await command.execute(interaction);
-    } catch (error) {
-        console.error()
-        await interaction.reply(`Couldn't execute ${interaction.commandName}`);
-    }
+    // Try to execute 
+    await command.execute(interaction);
+});
+
+// Register verify commands
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	// Return if the interactiopn isnt in the command seciton
+	if (interaction.channel.name !== verify) return;
+
+    // Get command by name
+	const command = client.verify.get(interaction.commandName);
+    if (!command) return; // return if the command isn't verify
+
+    // Try to execute 
+    await command.execute(interaction);
 });
 
 // Load event files	
