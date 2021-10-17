@@ -7,7 +7,7 @@ const { Routes } = require('discord-api-types/v9');
 const { freemem } = require('os');
 
 // Create a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS] });
 
 // Command collection (extends map)
 client.commands = new Collection();
@@ -89,6 +89,8 @@ for (const file of eventFiles) {
 	} else {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
+
+	console.log(`registered ${event.name}`);
 }
 
 // Free used memory
