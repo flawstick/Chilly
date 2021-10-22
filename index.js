@@ -7,7 +7,8 @@ const { Routes } = require('discord-api-types/v9');
 const { freemem } = require('os');
 
 // Create a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, 
+	Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
 
 // Command collection (extends map)
 client.commands = new Collection();
@@ -116,7 +117,7 @@ for (const file of eventFiles) {
 }
 
 // Free used memory
-freemem(eventFiles)
+freemem(eventFiles);
 
 
 // Login to Discord with your client's token
