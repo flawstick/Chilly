@@ -1,11 +1,14 @@
+const { readFile, writeFile } = require('fs');
+const { join } = require('path');
+
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const fs = require('fs');
+const { reaction_roles_json } = require(join(process.cwd(), '/config.json'));
 
 module.exports = {
 
 	data: new SlashCommandBuilder()
 		.setName('reaction-role')
-		.setDescription('Replies with server info!')
+		.setDescription('Adds a reaction!')
 		.addStringOption(option => 
 			option.setName('message')
 				.setRequired(true)
@@ -27,16 +30,34 @@ module.exports = {
 		const emoji = interaction.options.getString('emoji');
 
 		// Reply to message to get specefic channel
-		const reply = await interaction.reply({ content: 'Adding reaction role...', fetchReply: true,  ephermal: true });
+		const reply = await interaction.reply({ content: 'attempting to add reaction role...', fetchReply: true });
 
 		// Fetch message using channel id from reply and given message id
-		const message = await reply.channel.messages.fetch(messageId);
+		var message = null;
+		try {
+			message = await reply.channel.messages.fetch(messageId); // Fetch message
+		} catch(error) {
 
-		// Add reaction to the message
-		message.react(emoji);	
+			// Log error and delete message.
+			console.log(`[ERROR] [Reaction Roles Command] ${error} `);
+			await reply.edit({ content: 'Could not find message' });
+			reply.delete({timeout: 10000});
+			return;
+		}
+		
+		try {
+			message.react(emoji); // Add reaction to the message
+		} catch (error) {
+
+			// Log error and delete message.
+			console.log(`[ERROR] [Reaction Roles Command] ${error} `);
+			await reply.edit({ content: 'Could not find emoji' });
+			reply.delete({timeout: 10000});
+			return;
+		}
 
 		// Add to json
-		fs.readFile('events/reactions/reaction-roles.json', 'utf-8', (err, data) => {
+		readFile(reaction_roles_json, 'utf-8', (err, data) => {
 			if (err) throw err; // catch error
 
 			// Load json data
@@ -50,28 +71,35 @@ module.exports = {
 				return false;
 			};
 
+			// Check the existence of the gven message
 			const existance = check_exist(reaction_roles, messageId);
-
-			console.log(existance);
 			if (existance === false) {
 
 				// Add message to json file
 				const reaction_role = '{ ' + JSON.stringify(messageId.toString()) + ' : [{ ' + JSON.stringify(emoji) + ': ' + JSON.stringify(role.id) + ' }]}';			
 				reaction_roles.messages.push(JSON.parse(reaction_role));
 
-				console.log('if ran'); //debug
+				// Log to console
+				console.log("[INFO] [Reaction Roles Command] Added new message");
 			} else {
 
 				// Add roles to the message array object
 				 const reaction_role = '{ ' + JSON.stringify(emoji) + ': ' + JSON.stringify(role.id) + ' }';
-				 reaction_roles.messages[existance]["901858163614179368"].push(JSON.parse(reaction_role));
+				 reaction_roles.messages[existance][messageId.toString()].push(JSON.parse(reaction_role));
+
+				// Log to console
+				console.log("[INFO] [Reaction Roles Command] Added new reaction to message: " + messageId.toString());
 			}
 
 			// Write the Json back into the file
-			fs.writeFile('events/reactions/reaction-roles.json', JSON.stringify(reaction_roles), (err) => {
+			writeFile(reaction_roles_json, JSON.stringify(reaction_roles), (err) => {
 				if (err) throw err; // catch error
 			});
 			
 		});
+
+		// Inform of success
+		await reply.edit('New Reaction added!');
+		reply.delete({timeout: 10000});
 	}
 };
