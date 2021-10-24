@@ -1,5 +1,6 @@
 config.json
 package-lock.json
+events/reactions/reaction_roles.json
 package.json
 node_modules/
 

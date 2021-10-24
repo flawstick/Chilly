@@ -2,13 +2,15 @@
 const fs = require('fs');
 const { Client, Intents, Collection } = require('discord.js');
 const { REST } = require('@discordjs/rest');
-const { token, clientId, guildId, verify } = require('./config.json');
+const { token, clientId, guildId, verify, reaction_roles } = require('./config.json');
 const { Routes } = require('discord-api-types/v9');
 const { freemem } = require('os');
 
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, 
 	Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
+
+//--------------------------------------------------------------------------------------
 
 // Command collection (extends map)
 client.commands = new Collection();
@@ -30,6 +32,29 @@ for (const file of commandFiles) {
 	commands.push(command.data.toJSON());
 }
 
+//----------------------------------------------------------------------------------------
+
+// Make collection for reaction roles commands
+client.reactions = new Collection();
+
+// Read reaction role command files
+commandFiles = fs.readdirSync('./commands/reactions').filter(file => file.endsWith('.js'));
+
+// Initialize command collection
+for (const file of commandFiles) {
+	const command = require(`./commands/reactions/${file}`);
+
+	// Set a new item in the Collection
+	// With the key as the command name and the value as the exported module
+	client.reactions.set(command.data.name, command);
+
+	// Add everything into a
+	// Json file to reload commands
+	commands.push(command.data.toJSON());
+}
+
+//----------------------------------------------------------------------------------------
+
 // Make collection for verifacation command
 client.verify = new Collection();
 
@@ -44,6 +69,7 @@ client.verify.set(command.data.name, command);
 // Json format to reload commands
 commands.push(command.data.toJSON());
 
+//----------------------------------------------------------------------------------------
 
 // Rest disocrd API	
 const rest = new REST({version: '9'}).setToken(token);
@@ -69,6 +95,8 @@ const rest = new REST({version: '9'}).setToken(token);
 freemem(commands);
 freemem(commandFiles);
 
+//------------------------------------------------------------------------------------------
+
 // Register commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
@@ -81,6 +109,8 @@ client.on('interactionCreate', async interaction => {
     // Try to execute 
     await command.execute(interaction);
 });
+
+//-------------------------------------------------------------------------------------------
 
 // Register verify commands
 client.on('interactionCreate', async interaction => {
@@ -96,6 +126,25 @@ client.on('interactionCreate', async interaction => {
     // Try to execute 
     await command.execute(interaction);
 });
+
+//-------------------------------------------------------------------------------------------
+
+// Regiset reaction-roles commands
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	// Return if the interactiopn isnt in the command seciton
+	if (interaction.channel.name !== reaction_roles) return;
+
+    // Get command by name
+	const command = client.reactions.get(interaction.commandName);
+    if (!command) return; // return if the command isn't there
+
+    // Try to execute 
+    await command.execute(interaction);
+});
+
+//============================================================================================
 
 // Load event files	
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
@@ -118,7 +167,6 @@ for (const file of eventFiles) {
 
 // Free used memory
 freemem(eventFiles);
-
 
 // Login to Discord with your client's token
 client.login(token);
