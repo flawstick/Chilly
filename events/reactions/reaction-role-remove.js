@@ -7,9 +7,8 @@ const { reaction_roles_json, clientId } = require(join(process.cwd(), '/config.j
 module.exports = {
 
     // User join event
-    name: 'messageReactionAdd',
+    name: 'messageReactionRemove',
     async execute(reaction, user) {
-        if (user.id === clientId) return; // check if the user isn't a bot
 
         // Read json for message and roles
         readFile(reaction_roles_json, (err, data) => {
@@ -31,11 +30,14 @@ module.exports = {
                 // Fetch the role using role id
                 const role = reaction.message.guild.roles.cache.find(r => r.id === roleId);
 
-                // Add the role to the guild member
-                member.roles.add(role);
+                // check if a member even has the role (exception)
+                if (member.roles.cache.has(role.id))
+
+                    // Add the role to the guild member
+                    member.roles.remove(role);
 
                 // Log to console
-                console.log("[INFO] [REACTION ROLE] [ADD] The role [" + role.name + "] was added to guild member: " + member.user.tag);
+                console.log("[INFO] [REACTION ROLE] [REMOVE] The role [" + role.name + "] was remove deom the guild member: " + member.user.tag);
             }
         });
     },

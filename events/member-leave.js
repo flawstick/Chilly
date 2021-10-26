@@ -19,8 +19,8 @@ function getEmbed(member) {
 
     // User leave event
     name: 'guildMemberRemove',
-    execute(member) {
-        console.log(`${member.user} has left the server...`);
+    async execute(member) {
+        console.log(`[INFO] [LEAVE] [@${member.user.tag}] has left the server...`);
 
         // Bye in bye channel
         member.guild.channels.cache.find(ch => ch.name === bye).send({ embeds: [getEmbed(member)] });

@@ -1,6 +1,6 @@
 // Require the necessary discord.js classes
 const fs = require('fs');
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, Intents, Collection, Options } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { token, clientId, guildId, verify, reaction_roles } = require('./config.json');
 const { Routes } = require('discord-api-types/v9');
@@ -8,7 +8,13 @@ const { freemem } = require('os');
 
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, 
-	Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
+	Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS, 
+	Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.DIRECT_MESSAGE_REACTIONS, Intents.FLAGS.DIRECT_MESSAGE_TYPING, 
+	Intents.FLAGS.GUILD_BANS, Intents.FLAGS.GUILD_INTEGRATIONS, Intents.FLAGS.GUILD_INVITES, Intents.FLAGS.GUILD_VOICE_STATES, 
+	Intents.FLAGS.GUILD_MESSAGE_TYPING, Intents.FLAGS.GUILD_WEBHOOKS], 
+	partials: ['MESSAGE', 'REACTION', 'GUILD_MEMBER', 'USER'], 
+	makeCache: Options.cacheEverything() 
+});	
 
 //--------------------------------------------------------------------------------------
 
@@ -60,6 +66,7 @@ client.verify = new Collection();
 
 // Get verify file
 const command = require(`./verify/verify.js`);
+const { INSPECT_MAX_BYTES } = require('buffer');
 	
 // Set a new item in the Collection
 // With the key as the command name and the value as the exported module
@@ -78,16 +85,16 @@ const rest = new REST({version: '9'}).setToken(token);
 (async () => {
 	try {
 		// Start reload
-		console.log('Reloading Slash Commands');
+		console.log('[INFO] [COMMANDS] Reloading Slash Commands');
 		await rest.put(
 			Routes.applicationGuildCommands(clientId, guildId),
 			{ body: commands }
 			);
 		
 		// End reload
-		console.log('Finished reloading Slash Commands');
+		console.log('[INFO] [COMMANDS] Finished reloading Slash Commands');
 	} catch (error) {
-		console.log('Failed to reload Slash Commands');
+		console.log('[ERROR] [COMMANDS] Failed to reload Slash Commands');
 	}
 })();
 
@@ -147,7 +154,7 @@ client.on('interactionCreate', async interaction => {
 //============================================================================================
 
 // Load event files	
-const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+var eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
 // Iterate through events
 for (const file of eventFiles) {
@@ -162,11 +169,37 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 
-	console.log(`registered ${event.name}`);
+	// Log registration
+	console.log(`[INFO] [EVENT] Registered: ${event.name}`);
+}
+
+//-----------------------------------------------------------------------------------------------
+
+eventFiles = fs.readdirSync('./events/reactions').filter(file => file.endsWith('js'));
+
+// Iterate through events
+for (const file of eventFiles) {
+
+    // Get event by export
+	const event = require(`./events/reactions/${file}`);
+
+    // Check if once of on and run with ...args
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+
+	// Log registration
+	console.log(`[INFO] [EVENT] Registered: ${event.name}`);
 }
 
 // Free used memory
 freemem(eventFiles);
 
-// Login to Discord with your client's token
-client.login(token);
+//=================================================================================================
+												///////////////////////////////////////////////////
+// Login to Discord with your client's token	///////////////////////////////////////////////////
+client.login(token);							///////////////////////////////////////////////////	
+												///////////////////////////////////////////////////
+//==================================================================================================

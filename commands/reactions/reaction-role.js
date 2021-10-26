@@ -1,5 +1,6 @@
 const { readFile, writeFile } = require('fs');
 const { join } = require('path');
+const { checkMessageJsonArray } = require(join(process.cwd(), '/utils/reactions.js'));
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { reaction_roles_json } = require(join(process.cwd(), '/config.json'));
@@ -39,9 +40,9 @@ module.exports = {
 		} catch(error) {
 
 			// Log error and delete message.
-			console.log(`[ERROR] [Reaction Roles Command] ${error} `);
+			console.log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
 			await reply.edit({ content: 'Could not find message' });
-			reply.delete({timeout: 10000});
+			reply.delete({timeout: 100000});
 			return;
 		}
 		
@@ -50,9 +51,9 @@ module.exports = {
 		} catch (error) {
 
 			// Log error and delete message.
-			console.log(`[ERROR] [Reaction Roles Command] ${error} `);
+			console.log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
 			await reply.edit({ content: 'Could not find emoji' });
-			reply.delete({timeout: 10000});
+			reply.delete({timeout: 100000});
 			return;
 		}
 
@@ -63,16 +64,8 @@ module.exports = {
 			// Load json data
 			const reaction_roles = JSON.parse(data);
 
-			// check existance of the message
-			const check_exist = function (data, message) {
-				for (let i = 0; i < data.messages.length; i++) 
-					if (data.messages[i].hasOwnProperty(message.toString()))
-						return i;
-				return false;
-			};
-
 			// Check the existence of the gven message
-			const existance = check_exist(reaction_roles, messageId);
+			const existance = checkMessageJsonArray(reaction_roles["messages"] , messageId);
 			if (existance === false) {
 
 				// Add message to json file
@@ -80,7 +73,7 @@ module.exports = {
 				reaction_roles.messages.push(JSON.parse(reaction_role));
 
 				// Log to console
-				console.log("[INFO] [Reaction Roles Command] Added new message");
+				console.log("[INFO] [REACTION ROLES COMMAND] [MESSAGE] Added new message");
 			} else {
 
 				// Add roles to the message array object
@@ -88,7 +81,7 @@ module.exports = {
 				 reaction_roles.messages[existance][messageId.toString()].push(JSON.parse(reaction_role));
 
 				// Log to console
-				console.log("[INFO] [Reaction Roles Command] Added new reaction to message: " + messageId.toString());
+				console.log("[INFO] [REACTION ROLES COMMAND] [REACTION] Added new reaction to message: " + messageId.toString());
 			}
 
 			// Write the Json back into the file
@@ -100,6 +93,6 @@ module.exports = {
 
 		// Inform of success
 		await reply.edit('New Reaction added!');
-		reply.delete({timeout: 10000});
+		reply.delete({timeout: 100000});
 	}
 };

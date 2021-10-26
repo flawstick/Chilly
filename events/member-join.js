@@ -19,8 +19,8 @@ function getEmbed(member) {
 
     // User join event
     name: 'guildMemberAdd',
-    execute(member) {
-        console.log(`${member.user} has joined the server!`);
+    async execute(member) {
+        console.log(`[INFO] [JOIN] [@${member.user.tag}] has joined the server!`);
 
         // Welcome in welcome channel
         member.guild.channels.cache.find(ch => ch.name === welcome).send({ embeds: [getEmbed(member)] });

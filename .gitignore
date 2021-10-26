@@ -3,6 +3,7 @@ package-lock.json
 events\reactions\reaction-roles.json
 package.json
 node_modules/
+data/
 
 # Build and Release Folders
 bin-debug/
