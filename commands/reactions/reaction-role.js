@@ -74,7 +74,7 @@ module.exports = {
 				reaction_roles.messages.push(JSON.parse(reaction_role));
 
 				// Log to console
-				Log("[INFO] [REACTION ROLES COMMAND] [MESSAGE] Added new message");
+				Log("[INFO] [REACTION ROLES COMMAND] [MESSAGE] Added new message ");
 			} else {
 
 				// Add roles to the message array object
@@ -91,6 +91,7 @@ module.exports = {
 			});
 			
 		});
+
 
 		// Inform of success
 		await reply.edit('New Reaction added!');

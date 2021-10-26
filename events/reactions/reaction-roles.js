@@ -26,7 +26,7 @@ module.exports = {
             if (existance !== false) {
 
                 // Get the role id (see util declaration)
-                const roleId = checkEmojiJsonArray(json["messages"], reaction.emoji, existance, reaction.message.id);
+                const roleId = checkEmojiJsonArray(json["messages"], reaction.emoji.toString(), existance, reaction.message.id);
                 const member = reaction.message.guild.members.cache.get(user.id); // Get member from user.id
 
                 // Fetch the role using role id

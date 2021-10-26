@@ -25,7 +25,7 @@ module.exports = {
             if (existance !== false) {
 
                 // Get the role id (see util declaration)
-                const roleId = checkEmojiJsonArray(json["messages"], reaction.emoji, existance, reaction.message.id);
+                const roleId = checkEmojiJsonArray(json["messages"], reaction.emoji.toString(), existance, reaction.message.id);
                 const member = reaction.message.guild.members.cache.get(user.id); // Get member from user.id
 
                 // Fetch the role using role id
@@ -38,7 +38,7 @@ module.exports = {
                     member.roles.remove(role);
 
                 // Log to console
-                Log("[INFO] [REACTION ROLE] [REMOVE] The role [" + role.name + "] was remove deom the guild member: " + member.user.tag);
+                Log("[INFO] [REACTION ROLE] [REMOVE] The role [" + role.name + "] was remove from the guild member: " + member.user.tag);
             }
         });
     },
