@@ -50,7 +50,7 @@ module.exports.init = async function (client) {
     PARAMETER    TYPE          DESCRIPTION
     emoji        Emoji         The emoji that was created    */
     client.on("emojiCreate", function (emoji) {
-        Log(`[INFO] [EMOJI] [CREATE] Guild emoji created: ${emoji.name}`);
+        Log(`[INFO] [EMOJI] [CREATE] Guild emoji created: ${emoji.toString()}`);
     });
 
     // emojiDelete
@@ -58,7 +58,7 @@ module.exports.init = async function (client) {
     PARAMETER    TYPE         DESCRIPTION
     emoji        Emoji        The emoji that was deleted    */
     client.on("emojiDelete", function (emoji) {
-        Log(`[INFO] [EMOJI] [DELETE] Guild emoji deleted: ${emoji.name}`);
+        Log(`[INFO] [EMOJI] [DELETE] Guild emoji deleted: ${emoji.toString()}`);
     });
 
     // emojiUpdate
@@ -67,7 +67,7 @@ module.exports.init = async function (client) {
     oldEmoji     Emoji      The old emoji
     newEmoji     Emoji      The new emoji    */
     client.on("emojiUpdate", function (oldEmoji, newEmoji) {
-        Log(`[INFO] [EMOJI] [UPDATE] Guild emoji updated!: ${emoji.name}`);
+        Log(`[INFO] [EMOJI] [UPDATE] Guild emoji updated!: ${newEmoji.toString()}`);
     });
 
     // guildBanAdd

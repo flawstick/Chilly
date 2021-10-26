@@ -12,8 +12,8 @@ const checkEmojiJsonArray = function (data, emoji, index, messageId) {
     const array = data[index][messageId.toString()]; // Fetch array object
 
     // Loop through array object
-    for (let i = 0; i < data.length; i++) 
-        if (array[i].hasOwnProperty(emoji))
+    for (let i = 0; i < array.length; i++) 
+        if (array[i].hasOwnProperty(emoji)) 
             return array[i][emoji.toString()];
     return false;
 };
