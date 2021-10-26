@@ -1,5 +1,6 @@
 const { readFile } = require('fs');
 const { join } = require('path'); 
+const { Log } = require(join(process.cwd(), '/utils/logger.js'));
 
 const { checkMessageJsonArray, checkEmojiJsonArray } = require(join(process.cwd(), '/utils/reactions.js'));
 const { reaction_roles_json, clientId } = require(join(process.cwd(), '/config.json'));
@@ -35,7 +36,7 @@ module.exports = {
                 member.roles.add(role);
 
                 // Log to console
-                console.log("[INFO] [REACTION ROLE] [ADD] The role [" + role.name + "] was added to guild member: " + member.user.tag);
+                Log("[INFO] [REACTION ROLE] [ADD] The role [" + role.name + "] was added to guild member: " + member.user.tag);
             }
         });
     },

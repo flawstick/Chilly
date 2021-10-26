@@ -1,3 +1,5 @@
+const { Log } = require('../utils/logger.js');
+
 const { MessageEmbed } = require('discord.js');
 const { bye, chat, byeGif } = require('../config.json')
 
@@ -20,12 +22,12 @@ function getEmbed(member) {
     // User leave event
     name: 'guildMemberRemove',
     async execute(member) {
-        console.log(`[INFO] [LEAVE] [@${member.user.tag}] has left the server...`);
+        Log(`[INFO] [LEAVE] [${member.user.tag}] has left the server...`);
 
         // Bye in bye channel
-        member.guild.channels.cache.find(ch => ch.name === bye).send({ embeds: [getEmbed(member)] });
+        member.guild.channels.cache.find(channel => channel.id === bye).send({ embeds: [getEmbed(member)] });
 
         // Bye in chat channel
-        member.guild.channels.cache.find(ch => ch.name === chat).send({ embeds: [getEmbed(member)] });
+        member.guild.channels.cache.find(channel => channel.id === chat).send({ embeds: [getEmbed(member)] });
     },
 }

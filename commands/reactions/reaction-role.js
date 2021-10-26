@@ -1,9 +1,10 @@
 const { readFile, writeFile } = require('fs');
 const { join } = require('path');
 const { checkMessageJsonArray } = require(join(process.cwd(), '/utils/reactions.js'));
+const { Log } = require(join(process.cwd(), '/utils/logger.js'));
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reaction_roles_json } = require(join(process.cwd(), '/config.json'));
+const { reaction_roles_json, log } = require(join(process.cwd(), '/config.json'));
 
 module.exports = {
 
@@ -40,7 +41,7 @@ module.exports = {
 		} catch(error) {
 
 			// Log error and delete message.
-			console.log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
+			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
 			await reply.edit({ content: 'Could not find message' });
 			reply.delete({timeout: 100000});
 			return;
@@ -51,7 +52,7 @@ module.exports = {
 		} catch (error) {
 
 			// Log error and delete message.
-			console.log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
+			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
 			await reply.edit({ content: 'Could not find emoji' });
 			reply.delete({timeout: 100000});
 			return;
@@ -73,7 +74,7 @@ module.exports = {
 				reaction_roles.messages.push(JSON.parse(reaction_role));
 
 				// Log to console
-				console.log("[INFO] [REACTION ROLES COMMAND] [MESSAGE] Added new message");
+				Log("[INFO] [REACTION ROLES COMMAND] [MESSAGE] Added new message");
 			} else {
 
 				// Add roles to the message array object
@@ -81,7 +82,7 @@ module.exports = {
 				 reaction_roles.messages[existance][messageId.toString()].push(JSON.parse(reaction_role));
 
 				// Log to console
-				console.log("[INFO] [REACTION ROLES COMMAND] [REACTION] Added new reaction to message: " + messageId.toString());
+				Log("[INFO] [REACTION ROLES COMMAND] [REACTION] Added new reaction to message: " + messageId.toString());
 			}
 
 			// Write the Json back into the file

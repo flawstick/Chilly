@@ -1,3 +1,5 @@
+const { Log } = require('../utils/logger.js');
+
 const { MessageEmbed } = require('discord.js');
 const { welcome, chat, welcomeGif } = require('../config.json')
 
@@ -20,12 +22,12 @@ function getEmbed(member) {
     // User join event
     name: 'guildMemberAdd',
     async execute(member) {
-        console.log(`[INFO] [JOIN] [@${member.user.tag}] has joined the server!`);
+        Log(`[INFO] [JOIN] [${member.user.tag}] has joined the server!`);
 
         // Welcome in welcome channel
-        member.guild.channels.cache.find(ch => ch.name === welcome).send({ embeds: [getEmbed(member)] });
+        member.guild.channels.cache.find(channel => channel.id === welcome).send({ embeds: [getEmbed(member)] });
 
         // Welcome in chat channel
-        member.guild.channels.cache.find(ch => ch.name === chat).send({ embeds: [getEmbed(member)] });
+        member.guild.channels.cache.find(channel => channel.id === chat).send({ embeds: [getEmbed(member)] });
     },
 }

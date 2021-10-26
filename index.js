@@ -16,6 +16,11 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 	makeCache: Options.cacheEverything() 
 });	
 
+// Export client for the motherland
+module.exports = {
+	client
+}
+
 //--------------------------------------------------------------------------------------
 
 // Command collection (extends map)
@@ -107,7 +112,7 @@ freemem(commandFiles);
 // Register commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
-	if (interaction.channel.name === verify) return;
+	if (interaction.channel.id === verify) return;
 
     // Get command by name
 	const command = client.commands.get(interaction.commandName);
@@ -124,7 +129,7 @@ client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
 	// Return if the interactiopn isnt in the command seciton
-	if (interaction.channel.name !== verify) return;
+	if (interaction.channel.id !== verify) return;
 
     // Get command by name
 	const command = client.verify.get(interaction.commandName);
@@ -141,7 +146,7 @@ client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
 	// Return if the interactiopn isnt in the command seciton
-	if (interaction.channel.name !== reaction_roles) return;
+	if (interaction.channel.id !== reaction_roles) return;
 
     // Get command by name
 	const command = client.reactions.get(interaction.commandName);
