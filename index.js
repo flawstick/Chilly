@@ -71,7 +71,6 @@ client.verify = new Collection();
 
 // Get verify file
 const command = require(`./verify/verify.js`);
-const { INSPECT_MAX_BYTES } = require('buffer');
 	
 // Set a new item in the Collection
 // With the key as the command name and the value as the exported module
@@ -99,7 +98,7 @@ const rest = new REST({version: '9'}).setToken(token);
 		// End reload
 		console.log('[INFO] [COMMANDS] Finished reloading Slash Commands');
 	} catch (error) {
-		console.log('[ERROR] [COMMANDS] Failed to reload Slash Commands');
+		console.log('[ERROR] [COMMANDS] Failed to reload Slash Commands Error: ' + error);
 	}
 })();
 
