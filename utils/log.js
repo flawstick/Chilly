@@ -1,9 +1,8 @@
-const { client } = require('../index.js');
 const { log } = require('../config.json');
 
 var channel = null; // Channel variable
-const initLogger = async function() {
-    channel =  await client.channels.fetch(log); // Initialise variable
+const initLog = async function(client) {
+    channel = await client.channels.fetch(log); // Initialise variable
     console.log('[INFO] [LOGGER] Logger initialized!'); // Log initilization
 }
 
@@ -26,6 +25,6 @@ const Log = function(string) {
 
 module.exports = {
     Log,
-    initLogger
+    initLog
 }
 

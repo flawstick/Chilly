@@ -1,5 +1,5 @@
 const { noMessage, clientId } =  require('../config.json');
-const { Log } = require('../utils/logger');
+const { Log } = require('../utils/log.js');
 const { checkValueJsonArray } = require('../utils/utils.js');
 
 module.exports = {

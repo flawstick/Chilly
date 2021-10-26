@@ -1,4 +1,6 @@
-const { initLogger } = require('../utils/logger.js');
+const { initLog } = require('../utils/log.js');
+const logger = require('../logger.js');
+const { client } = require('../index.js');
 
 module.exports = {
 
@@ -8,9 +10,11 @@ module.exports = {
 
         // Make sure client is ready!
         //////////////////////////////////////////////////////////////////////////
-        console.log(`[READY] [READY] [READY] Logged in as ${client.user.tag}`);///   
-        await initLogger();                                                    /// 
-        console.log('[READY] [LOGGER] Logging stars: \n');                     ///
+        console.log(`[READY] [READY] [READY] Logged in as ${client.user.tag}`); 
+        await initLog(client);                                                       
+        console.log('[READY] [LOGGER] Logging started');   
+        await logger.init(client);
+        console.log('[READY] [LOGGER] [EVENT] Event logger ready');                                                                     
         //////////////////////////////////////////////////////////////////////////
     },
 

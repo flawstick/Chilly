@@ -73,7 +73,7 @@ client.apply = new Collection();
 commandFiles = fs.readdirSync('./commands/apply').filter(file => file.endsWith('apply.js'));
 
 // Initialize command collection
-const command = require(`./commands/apply/${file}`);
+var command = require(`./commands/apply/apply.js`);
 
 // Set a new item in the Collection
 // With the key as the command name and the value as the exported module
@@ -89,7 +89,7 @@ commands.push(command.data.toJSON());
 client.verify = new Collection();
 
 // Get verify file
-const command = require(`./commands/verify/verify.js`);
+command = require(`./commands/verify/verify.js`);
 	
 // Set a new item in the Collection
 // With the key as the command name and the value as the exported module
@@ -239,8 +239,11 @@ for (const file of eventFiles) {
 freemem(eventFiles);
 
 //=================================================================================================
-												///////////////////////////////////////////////////
-// Login to Discord with your client's token	///////////////////////////////////////////////////
-client.login(token);							///////////////////////////////////////////////////	
-												///////////////////////////////////////////////////
+												//=================================================
+// Initialize logger							//=================================================
+//initLogger(client);								//=================================================
+												//=================================================
+// Login to Discord with your client's token	//=================================================
+client.login(token);							//=================================================	
+												//=================================================
 //==================================================================================================

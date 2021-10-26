@@ -1,4 +1,4 @@
-const { Log } = require('../utils/logger.js');
+const { Log } = require('../utils/log.js');
 
 const { MessageEmbed } = require('discord.js');
 const { bye, chat, byeGif } = require('../config.json')
