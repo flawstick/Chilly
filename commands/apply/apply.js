@@ -1,3 +1,8 @@
+/*
+	This will communicate with a web server
+	and log application to the data, and will add it to database
+*/
+
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {

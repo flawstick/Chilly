@@ -1,3 +1,8 @@
+/*
+    This file is in it's own folder because it will collect data and make it into data
+    then database will update it every 30 minutes
+*/
+
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { residentRole, verify } = require('../config.json');
 const { Log } = require('../utils/logger');

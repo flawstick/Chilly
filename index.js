@@ -70,20 +70,18 @@ for (const file of commandFiles) {
 client.apply = new Collection();
 
 // Read reaction role command files
-commandFiles = fs.readdirSync('./commands/apply').filter(file => file.endsWith('.js'));
+commandFiles = fs.readdirSync('./commands/apply').filter(file => file.endsWith('apply.js'));
 
 // Initialize command collection
-for (const file of commandFiles) {
-	const command = require(`./commands/apply/${file}`);
+const command = require(`./commands/apply/${file}`);
 
-	// Set a new item in the Collection
-	// With the key as the command name and the value as the exported module
-	client.apply.set(command.data.name, command);
+// Set a new item in the Collection
+// With the key as the command name and the value as the exported module
+client.apply.set(command.data.name, command);
 
-	// Add everything into a
-	// Json file to reload commands
-	commands.push(command.data.toJSON());
-}
+// Add everything into a
+// Json file to reload commands
+commands.push(command.data.toJSON());
 
 //----------------------------------------------------------------------------------------
 
@@ -91,7 +89,7 @@ for (const file of commandFiles) {
 client.verify = new Collection();
 
 // Get verify file
-const command = require(`./verify/verify.js`);
+const command = require(`./commands/verify/verify.js`);
 	
 // Set a new item in the Collection
 // With the key as the command name and the value as the exported module
@@ -127,12 +125,13 @@ const rest = new REST({version: '9'}).setToken(token);
 freemem(commands);
 freemem(commandFiles);
 
-//------------------------------------------------------------------------------------------
+//===========================================================================================
 
 // Register commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 	if (interaction.channel.id === verify) return;
+	if (interaction.channel.id === apply) return;
 
     // Get command by name
 	const command = client.commands.get(interaction.commandName);
