@@ -2,7 +2,7 @@
 const fs = require('fs');
 const { Client, Intents, Collection, Options } = require('discord.js');
 const { REST } = require('@discordjs/rest');
-const { token, clientId, guildId, verify, reaction_roles } = require('./config.json');
+const { token, clientId, guildId, verify, reaction_roles, apply } = require('./config.json');
 const { Routes } = require('discord-api-types/v9');
 const { freemem } = require('os');
 
@@ -58,6 +58,27 @@ for (const file of commandFiles) {
 	// Set a new item in the Collection
 	// With the key as the command name and the value as the exported module
 	client.reactions.set(command.data.name, command);
+
+	// Add everything into a
+	// Json file to reload commands
+	commands.push(command.data.toJSON());
+}
+
+//----------------------------------------------------------------------------------------
+
+// Make collection for staff application commands
+client.apply = new Collection();
+
+// Read reaction role command files
+commandFiles = fs.readdirSync('./commands/apply').filter(file => file.endsWith('.js'));
+
+// Initialize command collection
+for (const file of commandFiles) {
+	const command = require(`./commands/apply/${file}`);
+
+	// Set a new item in the Collection
+	// With the key as the command name and the value as the exported module
+	client.apply.set(command.data.name, command);
 
 	// Add everything into a
 	// Json file to reload commands
@@ -149,6 +170,23 @@ client.on('interactionCreate', async interaction => {
 
     // Get command by name
 	const command = client.reactions.get(interaction.commandName);
+    if (!command) return; // return if the command isn't there
+
+    // Try to execute 
+    await command.execute(interaction);
+});
+
+//-------------------------------------------------------------------------------------------
+
+// Register apply commands
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	// Return if the interactiopn isnt in the command seciton
+	if (interaction.channel.id !== apply) return;
+
+    // Get command by name
+	const command = client.apply.get(interaction.commandName);
     if (!command) return; // return if the command isn't there
 
     // Try to execute 

@@ -3,7 +3,7 @@ const { join } = require('path');
 const { Log } = require(join(process.cwd(), '/utils/logger.js'));
 
 const { checkMessageJsonArray, checkEmojiJsonArray } = require(join(process.cwd(), '/utils/reactions.js'));
-const { reaction_roles_json, clientId } = require(join(process.cwd(), '/config.json'));
+const { reaction_roles_json } = require(join(process.cwd(), '/config.json'));
 
 module.exports = {
 
