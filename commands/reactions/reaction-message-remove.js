@@ -9,7 +9,7 @@ const { reaction_roles_json, guildId } = require(join(process.cwd(), '/config.js
 module.exports = {
 
 	data: new SlashCommandBuilder()
-		.setName('reaction-role-remove')
+		.setName('reaction-message-remove')
 		.setDescription('Adds a reaction!')
 		.addStringOption(option => 
 			option.setName('message')
@@ -38,7 +38,7 @@ module.exports = {
 		}
 		
 		try {
-			await message.reactions.removeAll(); // Remove reactions from the messsage
+			await message.delete;
 		} catch (error) {
 
 			// Log error and delete message.

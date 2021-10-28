@@ -3,7 +3,7 @@ const { join } = require('path');
 const { checkMessageJsonArray, checkEmojiJsonArray } = require(join(process.cwd(), '/utils/reactions.js'));
 const { Log } = require(join(process.cwd(), '/utils/log.js'));
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder, formatEmoji } = require('@discordjs/builders');
 const { reaction_roles_json } = require(join(process.cwd(), '/config.json'));
 
 module.exports = {
@@ -38,18 +38,22 @@ module.exports = {
 			// Log error and delete message.
 			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
 			await reply.edit({ content: 'Could not find message' });
-			reply.delete({timeout: 100000});
 			return;
 		}
 		
-		try {
-			await message.reactions.cache.get(emoji.id).remove(); // Remove reactions from the messsage
+		try {		
+
+			// React to message to fetch id by fetching the first reaciton 
+			await reply.react(emoji); // Which would be the bots
+			const emojiId = reply.reactions.cache.firstKey(); // gets the first reaction
+
+			// Remove the fetched emojiId
+			await message.reactions.cache.get(emojiId).remove();
 		} catch (error) {
 
 			// Log error and delete message.
 			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
 			await reply.edit({ content: 'Could not find emoji' });
-			reply.delete({timeout: 100000});
 			return;
 		}
 
@@ -67,7 +71,6 @@ module.exports = {
                 // Log error and delete message.
 			    Log(`[ERROR] [REACTION ROLES COMMAND] [REMOVE] [ROLE] Message ${messageId} does not contain any reaction roles!`);
 			    reply.edit({ content: 'Message is not a reaction role message!' });
-			    reply.delete({timeout: 100000});
 			    return;
             }
 
@@ -78,12 +81,11 @@ module.exports = {
                 // Log error and delete message.
 			    Log(`[ERROR] [REACTION ROLES COMMAND] [REMOVE] [ROLE] Message does not contain ${emoji.toString()}!`);
 			    reply.edit({ content: 'Message does not contain ' + emoji.toString() });
-			    reply.delete({timeout: 100000});
 			    return;   
             }
 
 			// Remove emoji from json message	
-			reaction_roles.messages = reaction_roles.messages[existance][messageId].splice(emojiExistance, 1);
+			reaction_roles.messages[existance][messageId].splice(emojiExistance, 1);
 
 			// Log to console
 			Log("[INFO] [REACTION ROLES COMMAND] [REMOVE] [REACTION] Removed " + emoji.toString() + " from message: " + messageId);
@@ -96,7 +98,7 @@ module.exports = {
 		});
 
 		// Inform of success
-		reply.edit(`Reaction-Role! ${emoji} removed!`);
-		reply.delete({timeout: 100000});
+		await reply.edit(`Reaction-Role! ${emoji} removed!`);
+		await reply.delete({timeout: 3000});
 	}
 };

@@ -2,7 +2,7 @@ const { readFile } = require('fs');
 const { join } = require('path'); 
 const { Log } = require(join(process.cwd(), '/utils/log.js'));
 
-const { checkMessageJsonArray, checkEmojiJsonArray } = require(join(process.cwd(), '/utils/reactions.js'));
+const { checkMessageJsonArray, getEmojiJsonArray } = require(join(process.cwd(), '/utils/reactions.js'));
 const { reaction_roles_json } = require(join(process.cwd(), '/config.json'));
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
             if (existance !== false) {
 
                 // Get the role id (see util declaration)
-                const roleId = checkEmojiJsonArray(json["messages"], reaction.emoji.toString(), existance, reaction.message.id);
+                const roleId = getEmojiJsonArray(json["messages"], reaction.emoji.toString(), existance, reaction.message.id);
                 const member = reaction.message.guild.members.cache.get(user.id); // Get member from user.id
 
                 // Fetch the role using role id

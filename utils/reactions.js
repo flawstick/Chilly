@@ -8,7 +8,7 @@ const checkMessageJsonArray = function (data, value) {
 
 // Checks if an emoji exists withing a message json array object 
 // Returns ( roleId | flase )
-const checkEmojiJsonArray = function (data, emoji, index, messageId) {
+const getEmojiJsonArray = function (data, emoji, index, messageId) {
     const array = data[index][messageId.toString()]; // Fetch array object
 
     // Loop through array object
@@ -18,7 +18,20 @@ const checkEmojiJsonArray = function (data, emoji, index, messageId) {
     return false;
 };
 
+// Checks if an emoji exists withing a message json array object 
+// Returns ( index | flase )
+const checkEmojiJsonArray = function (data, emoji, index, messageId) {
+    const array = data[index][messageId.toString()]; // Fetch array object
+
+    // Loop through array object
+    for (let i = 0; i < array.length; i++) 
+        if (array[i].hasOwnProperty(emoji)) 
+            return i;
+    return false;
+};
+
 module.exports = {
     checkMessageJsonArray,
-    checkEmojiJsonArray
+    checkEmojiJsonArray,
+    getEmojiJsonArray
 }
