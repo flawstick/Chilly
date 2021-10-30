@@ -31,14 +31,18 @@ module.exports = {
                 // Fetch the role using role id
                 const role = reaction.message.guild.roles.cache.find(r => r.id === roleId);
 
+                /*
+                Theres a caching problem here too find it and fix it
+                */
+
                 // check if a member even has the role (exception)
-                if (member.roles.cache.has(role.id))
+                if (member.roles.cache.has(roleId))
 
                     // Add the role to the guild member
                     member.roles.remove(role);
 
                 // Log to console
-                Log("[INFO] [REACTION ROLE] [REMOVE] The role [" + role.name + "] was remove from the guild member: " + member.user.tag);
+                Log("[INFO] [REACTION ROLE] [REMOVE] The role [" + role.name + "] was removed from the guild member: " + member.user.tag);
             }
         });
     },

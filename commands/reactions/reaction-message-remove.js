@@ -4,7 +4,7 @@ const { checkMessageJsonArray, checkEmojiJsonArray } = require(join(process.cwd(
 const { Log } = require(join(process.cwd(), '/utils/log.js'));
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reaction_roles_json, guildId } = require(join(process.cwd(), '/config.json'));
+const { reaction_roles_json } = require(join(process.cwd(), '/config.json'));
 
 module.exports = {
 
@@ -33,18 +33,18 @@ module.exports = {
 			// Log error and delete message.
 			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
 			await reply.edit({ content: 'Could not find message' });
-			reply.delete({timeout: 100000});
+			await reply.delete({timeout: 10000});
 			return;
 		}
 		
 		try {
-			await message.delete;
+			await message.delete({timeout: 10000});
 		} catch (error) {
 
 			// Log error and delete message.
 			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
 			await reply.edit({ content: 'Could not find emoji' });
-			reply.delete({timeout: 100000});
+			await reply.delete({timeout: 10000});
 			return;
 		}
 
@@ -62,7 +62,6 @@ module.exports = {
                 // Log error and delete message.
 			    Log(`[ERROR] [REACTION ROLES COMMAND] [REMOVE] [MESSAGE] Message ${messageId} does not contain any reaction roles!`);
 			    reply.edit({ content: 'Message is not a reaction role message!' });
-			    reply.delete({timeout: 100000});
 			    return;
             }
 
@@ -80,7 +79,7 @@ module.exports = {
 		});
 
 		// Inform of success
-		reply.edit(`Reaction-Message! ${messageId} removed!`);
-		reply.delete({timeout: 100000});
+		await reply.edit(`Reaction-Message! ${messageId} removed!`);
+		await reply.delete({timeout: 10000});
 	}
 };

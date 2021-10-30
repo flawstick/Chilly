@@ -1,6 +1,5 @@
 const { initLog } = require('../utils/log.js');
 const logger = require('../logger.js');
-const { client } = require('../index.js');
 
 module.exports = {
 

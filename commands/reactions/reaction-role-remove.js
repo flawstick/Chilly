@@ -3,7 +3,7 @@ const { join } = require('path');
 const { checkMessageJsonArray, checkEmojiJsonArray } = require(join(process.cwd(), '/utils/reactions.js'));
 const { Log } = require(join(process.cwd(), '/utils/log.js'));
 
-const { SlashCommandBuilder, formatEmoji } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { reaction_roles_json } = require(join(process.cwd(), '/config.json'));
 
 module.exports = {
@@ -38,6 +38,7 @@ module.exports = {
 			// Log error and delete message.
 			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
 			await reply.edit({ content: 'Could not find message' });
+			await reply.delete({timeout: 10000});
 			return;
 		}
 		
@@ -54,6 +55,7 @@ module.exports = {
 			// Log error and delete message.
 			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
 			await reply.edit({ content: 'Could not find emoji' });
+			await reply.delete({timeout:10000});
 			return;
 		}
 

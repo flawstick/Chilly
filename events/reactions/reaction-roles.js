@@ -2,7 +2,7 @@ const { readFile } = require('fs');
 const { join } = require('path'); 
 const { Log } = require(join(process.cwd(), '/utils/log.js'));
 
-const { checkMessageJsonArray, getEmojiJsonArray } = require(join(process.cwd(), '/utils/reactions.js'));
+const { checkMessageJsonArray, getEmojiJsonArray, checkLegalReaction } = require(join(process.cwd(), '/utils/reactions.js'));
 const { reaction_roles_json, clientId } = require(join(process.cwd(), '/config.json'));
 
 module.exports = {
@@ -28,6 +28,12 @@ module.exports = {
                 // Get the role id (see util declaration)
                 const roleId = getEmojiJsonArray(json["messages"], reaction.emoji.toString(), existance, reaction.message.id);
                 const member = reaction.message.guild.members.cache.get(user.id); // Get member from user.id
+                
+                if (checkLegalReaction(reaction.message, member.user, json["messages"][existance].max) === false) {
+                    reaction.users.remove(member.user.id)
+                        .then(Log(`[WARN] [REACTION ROLE] [REMOVE] Member ${member.user.tag} tried to exceed max reactions in message`));
+                    return;
+                }
 
                 // Fetch the role using role id
                 const role = reaction.message.guild.roles.cache.find(r => r.id === roleId);
@@ -36,8 +42,7 @@ module.exports = {
                 member.roles.add(role);
 
                 // Log to console
-                Log("[INFO] [REACTION ROLE] [ADD] The role [" + role.name + "] was added to guild member: " + member.user.tag);
-                console.log(reaction.emoji.name);
+                Log("[INFO] [REACTION ROLE] [ADD] The role [" + role.name + "] was added to guild member: " + member.user.tag + " Emoji: " + reaction.emoji.name);
             }
         });
     },

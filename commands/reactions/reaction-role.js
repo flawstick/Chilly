@@ -22,14 +22,25 @@ module.exports = {
 		.addStringOption(option => 
 			option.setName('emoji')
 				.setRequired(true)
-				.setDescription('Emoji which adds the role')),
+				.setDescription('Emoji which adds the role'))
+		.addIntegerOption(option =>
+			option.setName('max')
+				.setRequired(false)
+				.setDescription('The amount of roles a user can get from this message')),
 
 	async execute(interaction) {
 
 		// Get command options
-		const messageId = interaction.options.getString('message');
-		const role = interaction.options.getRole('role');
-		const emoji = interaction.options.getString('emoji');
+		const messageId = await interaction.options.getString('message');
+		const role = await interaction.options.getRole('role');
+		const emoji = await interaction.options.getString('emoji');
+		var max = await interaction.options.getInteger('max');
+		
+		// Make sure max isn't null for players to interact
+		if (max === null) {
+			console.log('[WARN] [REACTION ROLE COMMAND] [NO MAX] No max has been set, set to 500');
+			max = 500;
+		}
 
 		// Reply to message to get specefic channel
 		const reply = await interaction.reply({ content: 'attempting to add reaction role...', fetchReply: true });
@@ -54,7 +65,7 @@ module.exports = {
 			// Log error and delete message.
 			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
 			await reply.edit({ content: 'Could not find emoji' });
-			reply.delete({timeout: 100000});
+			await reply.delete({timeout: 100000});
 			return;
 		}
 
@@ -70,7 +81,7 @@ module.exports = {
 			if (existance === false) {
 
 				// Add message to json file
-				const reaction_role = '{ ' + JSON.stringify(messageId.toString()) + ' : [{ ' + JSON.stringify(emoji) + ': ' + JSON.stringify(role.id) + ' }]}';			
+				const reaction_role = '{ ' + JSON.stringify(messageId.toString()) + ' : [{ ' + JSON.stringify(emoji) + ': ' + JSON.stringify(role.id) + ' }], "max": ' + JSON.stringify(max) + '}';			
 				reaction_roles.messages.push(JSON.parse(reaction_role));
 
 				// Log to console

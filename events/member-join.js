@@ -6,11 +6,14 @@ const { welcome, chat, welcomeGif } = require('../config.json')
 // Return a MessageEmbed
 function getEmbed(member) { 
 
+    // Get welcome gifs
+    const welcomeGifs = JSON.parse(welcomeGif);
+
     // Create welcome message
     const greetEmbed = new MessageEmbed()
 	    .setColor('#0099ff')
-        .setDescription(`Welcome to C H I L L V E R S E, ${member.user}`)
-	    .setImage(welcomeGif)
+        .setDescription(`Welcome to C H I L L V E R S E, ${member.user.tag}`)
+	    .setImage(welcomeGifs[(Math.random() * welcomeGifs.length)])
 	    .setTimestamp()
 	    .setFooter('Have fun in our server!', member.avatar);
     
