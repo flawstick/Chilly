@@ -1,4 +1,5 @@
 const { initLog } = require('../utils/log.js');
+const { cacheReactionMessages } = require('../utils/utils.js');
 const logger = require('../logger.js');
 
 module.exports = {
@@ -10,10 +11,18 @@ module.exports = {
         // Make sure client is ready!
         //////////////////////////////////////////////////////////////////////////
         console.log(`[READY] [READY] [READY] Logged in as ${client.user.tag}`); 
+
+        // Initialize log function
         await initLog(client);                                                       
         console.log('[READY] [LOGGER] Logging started');   
+
+        // Initalize logger
         await logger.init(client);
-        console.log('[READY] [LOGGER] [EVENT] Event logger ready');                                                                     
+        console.log('[READY] [LOGGER] [EVENT] Event logger ready');   
+
+        // Cache data for reaction messages
+        await cacheReactionMessages(client);
+        console.log('[READY] [REACTION MESSAGES] [CACHE] Fetched data');
         //////////////////////////////////////////////////////////////////////////
     },
 

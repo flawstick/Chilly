@@ -1,9 +1,20 @@
-const { readFile } = require('fs');
-const { join } = require('path'); 
-const { Log } = require(join(process.cwd(), '/utils/log.js'));
+const {
+    readFile
+} = require('fs');
+const {
+    join
+} = require('path');
+const {
+    Log
+} = require(join(process.cwd(), '/utils/log.js'));
 
-const { checkMessageJsonArray, getEmojiJsonArray } = require(join(process.cwd(), '/utils/reactions.js'));
-const { reaction_roles_json } = require(join(process.cwd(), '/config.json'));
+const {
+    checkMessageJsonArray,
+    getEmojiJsonArray
+} = require(join(process.cwd(), '/utils/reactions.js'));
+const {
+    reaction_roles_json
+} = require(join(process.cwd(), '/config.json'));
 
 module.exports = {
 
@@ -30,10 +41,6 @@ module.exports = {
 
                 // Fetch the role using role id
                 const role = reaction.message.guild.roles.cache.find(r => r.id === roleId);
-
-                /*
-                Theres a caching problem here too find it and fix it
-                */
 
                 // check if a member even has the role (exception)
                 if (member.roles.cache.has(roleId))
