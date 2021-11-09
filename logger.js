@@ -1,4 +1,6 @@
-const { Log } = require('./utils/log.js');
+const {
+    Log
+} = require('./utils/log.js');
 
 module.exports.init = async function (client) {
 

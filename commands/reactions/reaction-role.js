@@ -1,32 +1,45 @@
-const { readFile, writeFile } = require('fs');
-const { join } = require('path');
-const { checkMessageJsonArray } = require(join(process.cwd(), '/utils/reactions.js'));
-const { Log } = require(join(process.cwd(), '/utils/log.js'));
+const {
+	readFile,
+	writeFile
+} = require('fs');
+const {
+	join
+} = require('path');
+const {
+	checkMessageJsonArray
+} = require(join(process.cwd(), '/utils/reactions.js'));
+const {
+	Log
+} = require(join(process.cwd(), '/utils/log.js'));
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reaction_roles_json } = require(join(process.cwd(), '/config.json'));
+const {
+	SlashCommandBuilder
+} = require('@discordjs/builders');
+const {
+	reaction_roles_json
+} = require(join(process.cwd(), '/config.json'));
 
 module.exports = {
 
 	data: new SlashCommandBuilder()
 		.setName('reaction-role')
 		.setDescription('Adds a reaction!')
-		.addStringOption(option => 
+		.addStringOption(option =>
 			option.setName('message')
-				.setRequired(true)
-				.setDescription('Message ID with reaction roles.'))
+			.setRequired(true)
+			.setDescription('Message ID with reaction roles.'))
 		.addRoleOption(option =>
 			option.setName('role')
-				.setRequired(true)
-				.setDescription('Role which the raction adds'))
-		.addStringOption(option => 
+			.setRequired(true)
+			.setDescription('Role which the raction adds'))
+		.addStringOption(option =>
 			option.setName('emoji')
-				.setRequired(true)
-				.setDescription('Emoji which adds the role'))
+			.setRequired(true)
+			.setDescription('Emoji which adds the role'))
 		.addIntegerOption(option =>
 			option.setName('max')
-				.setRequired(false)
-				.setDescription('The amount of roles a user can get from this message')),
+			.setRequired(false)
+			.setDescription('The amount of roles a user can get from this message')),
 
 	async execute(interaction) {
 
@@ -35,7 +48,7 @@ module.exports = {
 		const role = await interaction.options.getRole('role');
 		const emoji = await interaction.options.getString('emoji');
 		var max = await interaction.options.getInteger('max');
-		
+
 		// Make sure max isn't null for players to interact
 		if (max === null) {
 			console.log('[WARN] [REACTION ROLE COMMAND] [NO MAX] No max has been set, set to 500');
@@ -43,29 +56,40 @@ module.exports = {
 		}
 
 		// Reply to message to get specefic channel
-		const reply = await interaction.reply({ content: 'attempting to add reaction role...', fetchReply: true });
+		const reply = await interaction.reply({
+			content: 'attempting to add reaction role...',
+			fetchReply: true
+		});
 
 		// Fetch message using channel id from reply and given message id
 		var message = null;
 		try {
 			message = await reply.channel.messages.fetch(messageId); // Fetch message
-		} catch(error) {
+		} catch (error) {
 
 			// Log error and delete message.
 			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
-			await reply.edit({ content: 'Could not find message' });
-			reply.delete({timeout: 100000});
+			await reply.edit({
+				content: 'Could not find message'
+			});
+			reply.delete({
+				timeout: 100000
+			});
 			return;
 		}
-		
+
 		try {
 			message.react(emoji); // Add reaction to the message
 		} catch (error) {
 
 			// Log error and delete message.
 			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
-			await reply.edit({ content: 'Could not find emoji' });
-			await reply.delete({timeout: 100000});
+			await reply.edit({
+				content: 'Could not find emoji'
+			});
+			await reply.delete({
+				timeout: 100000
+			});
 			return;
 		}
 
@@ -77,11 +101,11 @@ module.exports = {
 			const reaction_roles = JSON.parse(data);
 
 			// Check the existence of the gven message
-			const existance = checkMessageJsonArray(reaction_roles["messages"] , messageId);
+			const existance = checkMessageJsonArray(reaction_roles["messages"], messageId);
 			if (existance === false) {
 
 				// Add message to json file
-				const reaction_role = '{ ' + JSON.stringify(messageId.toString()) + ' : [{ ' + JSON.stringify(emoji) + ': ' + JSON.stringify(role.id) + ' }], "max": ' + JSON.stringify(max) + '}';			
+				const reaction_role = '{ ' + JSON.stringify(messageId.toString()) + ' : [{ ' + JSON.stringify(emoji) + ': ' + JSON.stringify(role.id) + ' }], "max": ' + JSON.stringify(max) + '}';
 				reaction_roles.messages.push(JSON.parse(reaction_role));
 
 				// Log to console
@@ -89,8 +113,8 @@ module.exports = {
 			} else {
 
 				// Add roles to the message array object
-				 const reaction_role = '{ ' + JSON.stringify(emoji) + ': ' + JSON.stringify(role.id) + ' }';
-				 reaction_roles.messages[existance][messageId.toString()].push(JSON.parse(reaction_role));
+				const reaction_role = '{ ' + JSON.stringify(emoji) + ': ' + JSON.stringify(role.id) + ' }';
+				reaction_roles.messages[existance][messageId.toString()].push(JSON.parse(reaction_role));
 
 				// Log to console
 				Log("[INFO] [REACTION ROLES COMMAND] [REACTION] Added new reaction to message: " + messageId.toString());
@@ -100,12 +124,14 @@ module.exports = {
 			writeFile(reaction_roles_json, JSON.stringify(reaction_roles), (err) => {
 				if (err) throw err; // catch error
 			});
-			
+
 		});
 
 
 		// Inform of success
 		await reply.edit('New Reaction added!');
-		reply.delete({timeout: 100000});
+		reply.delete({
+			timeout: 100000
+		});
 	}
 };

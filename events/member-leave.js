@@ -1,26 +1,34 @@
-const { Log } = require('../utils/log.js');
+const {
+    Log
+} = require('../utils/log.js');
 
-const { MessageEmbed } = require('discord.js');
-const { bye, chat, byeGif } = require('../config.json')
+const {
+    MessageEmbed
+} = require('discord.js');
+const {
+    bye,
+    chat,
+    byeGif
+} = require('../config.json')
 
 // Return a MessageEmbed
-function getEmbed(member) { 
+function getEmbed(member) {
 
     // get bye gifs
     const byeGifs = JSON.parse(byeGif);
 
     // Create removal message
     const greetEmbed = new MessageEmbed()
-	    .setColor('#0099ff')
+        .setColor('#0099ff')
         .setDescription(`Goodbye, ${member.user.tag}...`)
-	    .setImage(byeGifs[(Math.random() * byeGifs.length)])
-	    .setTimestamp()
-	    .setFooter(`Why'd you have to fuck off this way...`, member.avatar);
-    
+        .setImage(byeGifs[(Math.random() * byeGifs.length)])
+        .setTimestamp()
+        .setFooter(`Why'd you have to fuck off this way...`, member.avatar);
+
     return greetEmbed;
 }
- 
- module.exports = {
+
+module.exports = {
 
     // User leave event
     name: 'guildMemberRemove',
@@ -28,9 +36,13 @@ function getEmbed(member) {
         Log(`[INFO] [LEAVE] [${member.user.tag}] has left the server...`);
 
         // Bye in bye channel
-        member.guild.channels.cache.find(channel => channel.id === bye).send({ embeds: [getEmbed(member)] });
+        member.guild.channels.cache.find(channel => channel.id === bye).send({
+            embeds: [getEmbed(member)]
+        });
 
         // Bye in chat channel
-        member.guild.channels.cache.find(channel => channel.id === chat).send({ embeds: [getEmbed(member)] });
+        member.guild.channels.cache.find(channel => channel.id === chat).send({
+            embeds: [getEmbed(member)]
+        });
     },
 }

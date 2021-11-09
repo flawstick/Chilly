@@ -1,4 +1,6 @@
-const { client } = require('../index.js');
+const {
+    client
+} = require('../index.js');
 
 // Check if a message ecists in a json array
 const checkMessageJsonArray = function (data, value) {
@@ -14,8 +16,8 @@ const getEmojiJsonArray = function (data, emoji, index, messageId) {
     const array = data[index][messageId.toString()]; // Fetch array object
 
     // Loop through array object
-    for (let i = 0; i < array.length; i++) 
-        if (array[i].hasOwnProperty(emoji)) 
+    for (let i = 0; i < array.length; i++)
+        if (array[i].hasOwnProperty(emoji))
             return array[i][emoji.toString()];
     return false;
 };
@@ -26,8 +28,8 @@ const checkEmojiJsonArray = function (data, emoji, index, messageId) {
     const array = data[index][messageId.toString()]; // Fetch array object
 
     // Loop through array object
-    for (let i = 0; i < array.length; i++) 
-        if (array[i].hasOwnProperty(emoji)) 
+    for (let i = 0; i < array.length; i++)
+        if (array[i].hasOwnProperty(emoji))
             return i;
     return false;
 };
@@ -37,7 +39,7 @@ const checkEmojiJsonArray = function (data, emoji, index, messageId) {
 const checkLegalReaction = function (message, user, max) {
 
     /*Huge issue here, data needs to be cached in order to operate with it
-    there are some guides on caching online too tired rn tho lmao*/ 
+    there are some guides on caching online too tired rn tho lmao*/
     message.reactions.cache.filter(reaction => reaction.users.cache.has(user.id)).size <= max;
 }
 

@@ -1,7 +1,10 @@
-const { reaction_roles, guildId } = require('../config.json');
+const {
+    reaction_roles,
+    guildId
+} = require('../config.json');
 
 // Cache everything needed for reaction roles.
-const cacheReactionMessages = async function(client) {
+const cacheReactionMessages = async function (client) {
 
     // Fetching discord messages in the reaction roles channel
     client.channels.cache.get(reaction_roles).messages.fetch();
@@ -10,12 +13,12 @@ const cacheReactionMessages = async function(client) {
     client.guilds.cache.get(guildId).members.fetch();
 }
 
-const checkValueJsonArray = async function(array, value) {
+const checkValueJsonArray = async function (array, value) {
     for (let i = 0; i < array.length; i++)
         if (array[i] === value)
             return i;
     return false;
-} 
+}
 
 module.exports = {
     checkValueJsonArray,

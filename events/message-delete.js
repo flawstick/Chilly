@@ -1,6 +1,13 @@
-const { noMessage, clientId } =  require('../config.json');
-const { Log } = require('../utils/log.js');
-const { checkValueJsonArray } = require('../utils/utils.js');
+const {
+    noMessage,
+    clientId
+} = require('../config.json');
+const {
+    Log
+} = require('../utils/log.js');
+const {
+    checkValueJsonArray
+} = require('../utils/utils.js');
 
 module.exports = {
 
@@ -8,7 +15,7 @@ module.exports = {
     name: 'messageCreate',
     async execute(message) {
         if (message.author.id === clientId) return; // Ignore if it's the bot
-        
+
         // Check if the value exists (check declaration in utils)
         const existance = await checkValueJsonArray(noMessage, message.channel.id);
         if (existance === false) return; // Return if channel does not exist
