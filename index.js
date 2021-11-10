@@ -20,9 +20,6 @@ const {
 const {
 	Routes
 } = require('discord-api-types/v9');
-const {
-	freemem
-} = require('os');
 
 // Create a new client instance
 const client = new Client({
@@ -45,10 +42,10 @@ module.exports = {
 
 // Command collection (extends map)
 client.commands = new Collection();
-commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+var commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 // Array of commands for JSON
-const commands = [];
+var commands = [];
 
 // Initialize command collection
 for (const file of commandFiles) {
@@ -145,8 +142,8 @@ const rest = new REST({
 })();
 
 // Free used memory
-freemem(commands);
-freemem(commandFiles);
+commands = undefined;
+commandFiles = undefined;
 
 //===========================================================================================
 
@@ -259,7 +256,7 @@ for (const file of eventFiles) {
 }
 
 // Free used memory
-freemem(eventFiles);
+eventFiles = undefined;
 
 //=================================================================================================
 //=================================================

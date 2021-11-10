@@ -26,7 +26,7 @@ module.exports = {
 
         // Cache data for reaction messages
         await cacheReactionMessages(client);
-        console.log('[READY] [REACTION MESSAGES] [CACHE] Fetched data');
+        console.log('[READY] [REACTION MESSAGES] [CACHE] Fetched reaction messages data');
         //////////////////////////////////////////////////////////////////////////
     },
 

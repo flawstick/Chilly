@@ -21,7 +21,7 @@ function getEmbed(member) {
     const greetEmbed = new MessageEmbed()
         .setColor('#0099ff')
         .setDescription(`Welcome to C H I L L V E R S E, ${member.user.tag}`)
-        .setImage(welcomeGifs[(Math.random() * welcomeGifs.length)])
+        .setImage(welcomeGif[(Math.round(Math.random()) * (welcomeGif.length - 1))])
         .setTimestamp()
         .setFooter('Have fun in our server!', member.avatar);
 

@@ -21,7 +21,7 @@ function getEmbed(member) {
     const greetEmbed = new MessageEmbed()
         .setColor('#0099ff')
         .setDescription(`Goodbye, ${member.user.tag}...`)
-        .setImage(byeGifs[(Math.random() * byeGifs.length)])
+        .setImage(byeGif[(Math.round(Math.random()) * (byeGif.length - 1))])
         .setTimestamp()
         .setFooter(`Why'd you have to fuck off this way...`, member.avatar);
 
