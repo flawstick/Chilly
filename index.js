@@ -141,10 +141,6 @@ const rest = new REST({
 	}
 })();
 
-// Free used memory
-commands = undefined;
-commandFiles = undefined;
-
 //===========================================================================================
 
 // Register commands

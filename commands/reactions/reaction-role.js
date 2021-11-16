@@ -18,6 +18,9 @@ const {
 const {
 	reaction_roles_json
 } = require(join(process.cwd(), '/config.json'));
+const {
+	Permissions
+} = require('discord.js');
 
 module.exports = {
 
@@ -42,6 +45,13 @@ module.exports = {
 			.setDescription('The amount of roles a user can get from this message')),
 
 	async execute(interaction) {
+
+		// Set permissions
+		if (interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR) === false) {
+			interaction.reply({ content: `You're unable to use this command.`, ephemeral: true});
+			Log(`[WARN] [REACTION ROLE COMMAND] ${interaction.member.user.tag} tried using reaction role command without permission.`);
+			return;
+		}
 
 		// Get command options
 		const messageId = await interaction.options.getString('message');

@@ -7,7 +7,7 @@ const {
 } = require('path');
 const {
 	checkMessageJsonArray,
-	checkEmojiJsonArray
+	checkEmojiJsonArray	
 } = require(join(process.cwd(), '/utils/reactions.js'));
 const {
 	Log
@@ -19,6 +19,9 @@ const {
 const {
 	reaction_roles_json
 } = require(join(process.cwd(), '/config.json'));
+const {
+	Permissions
+} = require('discord.js');
 
 module.exports = {
 
@@ -31,6 +34,13 @@ module.exports = {
 			.setDescription('Message ID with reaction roles.')),
 
 	async execute(interaction) {
+
+		// Set permissions
+		if (interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR) === false) {
+			interaction.reply({ content: `You're unable to use this command.`, ephemeral: true});
+			Log(`[WARN] [REACTION ROLE COMMAND] ${interaction.member.user.tag} tried using reaction role command without permission.`);
+			return;
+		}
 
 		// Get command options
 		const messageId = interaction.options.getString('message');

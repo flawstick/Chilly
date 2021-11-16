@@ -14,16 +14,14 @@ const {
 // Return a MessageEmbed
 function getEmbed(member) {
 
-    // Get welcome gifs
-    const welcomeGifs = JSON.parse(welcomeGif);
-
     // Create welcome message
     const greetEmbed = new MessageEmbed()
         .setColor('#0099ff')
-        .setDescription(`Welcome to C H I L L V E R S E, ${member.user.tag}`)
+        .setAuthor(member.user.username, member.user.avatarURL())
+        .setDescription(`Welcome to C H I L L V E R S E, ${member.user}`)
         .setImage(welcomeGif[(Math.round(Math.random()) * (welcomeGif.length - 1))])
         .setTimestamp()
-        .setFooter('Have fun in our server!', member.avatar);
+        .setFooter('Have fun in our server!', member.guild.iconURL());
 
     return greetEmbed;
 }

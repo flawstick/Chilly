@@ -14,16 +14,14 @@ const {
 // Return a MessageEmbed
 function getEmbed(member) {
 
-    // get bye gifs
-    const byeGifs = JSON.parse(byeGif);
-
     // Create removal message
     const greetEmbed = new MessageEmbed()
         .setColor('#0099ff')
-        .setDescription(`Goodbye, ${member.user.tag}...`)
+        .setAuthor(member.user.username, member.user.avatarURL())
+        .setDescription(`Goodbye, ${member.user}...`)
         .setImage(byeGif[(Math.round(Math.random()) * (byeGif.length - 1))])
         .setTimestamp()
-        .setFooter(`Why'd you have to fuck off this way...`, member.avatar);
+        .setFooter(`Why'd you have to fuck off this way...`, member.guild.iconURL());
 
     return greetEmbed;
 }

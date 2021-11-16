@@ -78,7 +78,7 @@ module.exports.init = async function (client) {
     guild        Guild         The guild that the ban occurred in
     user         User          The user that was banned    */
     client.on("guildBanAdd", function (guild, user) {
-        Log(`[INFO] [BAN] ${user.tag} has been banned from the guild!`);
+        Log(`[INFO] [BAN] ${user} has been banned from the guild!`);
     });
 
     // guildBanRemove
@@ -87,7 +87,7 @@ module.exports.init = async function (client) {
     guild        Guild        The guild that the unban occurred in
     user         User         The user that was unbanned    */
     client.on("guildBanRemove", function (guild, user) {
-        Log(`[INFO] [UNBAN] ${user.tag} has been unbanned from the guild!`);
+        Log(`[INFO] [UNBAN] ${user} has been unbanned from the guild!`);
     });
 
     // guildMemberUpdate
