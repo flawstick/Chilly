@@ -19,7 +19,7 @@ module.exports = {
             .setRequired(true))
         .addStringOption(option =>
             option.setName('reason')
-            .setDescription('Reason the user will be muted')
+            .setDescription('Reason the user will be banned')
             .setRequired(true))
         .addIntegerOption(option =>
             option.setName('time')
@@ -56,30 +56,23 @@ module.exports = {
             return;
         }
 
-        var flag; // Banned / Unbanned
         try {
-            if (interaction.guild.bans.cache.has(user.id) === false) {
-                await interaction.guild.members.cache.get(user.id).ban({
-                    days: time,
-                    reason: reason
-                });
-                flag = `banned`; // Identify function
-            } else {
-                await interaction.guild.bans.remove(user.id);
-                flag = `unbanned`; // Udentify function
-            }
+            await interaction.guild.members.cache.get(user.id).ban({
+                days: time,
+                reason: reason
+            });
 
         } catch (error) {
-            Log(`[ERROR] [BAN] [${interaction.member.user.tag}] Could not ban/unban guild member ${user.tag}, Error: ${error}`);
+            Log(`[ERROR] [BAN] [${interaction.member.user.tag}] Could not ban guild member ${user.tag}, Error: ${error}`);
             interaction.reply({
-                content: `Couldn't ban/unban member`,
+                content: `Couldn't ban member`,
                 ephemeral: true
             });
             return;
         }
 
         // Feedback, and log
-        Log(`[INFO] [BAN] [${interaction.member.user.tag}] Successfully ${flag} ${user.tag} , Reason: ${reason}`);
-        interaction.reply(`Successfully ${flag} ${user}! Reason: ${reason}`);
+        Log(`[INFO] [BAN] [${interaction.member.user.tag}] Successfully banned ${user.tag} , Reason: ${reason}`);
+        interaction.reply(`Successfully banned ${user}! Reason: ${reason}`);
     },
 }
