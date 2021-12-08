@@ -7,7 +7,6 @@ const {
 } = require('path');
 const {
 	checkMessageJsonArray,
-	checkEmojiJsonArray	
 } = require(join(process.cwd(), '/utils/reactions.js'));
 const {
 	Log

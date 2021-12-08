@@ -118,6 +118,27 @@ commands.push(command.data.toJSON());
 
 //----------------------------------------------------------------------------------------
 
+// Make collection for verifacation command
+client.action = new Collection();
+
+// Read reaction role command files
+commandFiles = fs.readdirSync('./commands/actions').filter(file => file.endsWith('.js'));
+
+// Initialize command collection
+for (const file of commandFiles) {
+	const command = require(`./commands/actions/${file}`);
+
+	// Set a new item in the Collection
+	// With the key as the command name and the value as the exported module
+	client.action.set(command.data.name, command);
+
+	// Add everything into a
+	// Json file to reload commands
+	commands.push(command.data.toJSON());
+}
+
+//----------------------------------------------------------------------------------------
+
 // Rest disocrd API	
 const rest = new REST({
 	version: '9'
@@ -169,6 +190,20 @@ client.on('interactionCreate', async interaction => {
 	// Get command by name
 	const command = client.verify.get(interaction.commandName);
 	if (!command) return; // return if the command isn't verify
+
+	// Try to execute 
+	await command.execute(interaction);
+});
+
+//-------------------------------------------------------------------------------------------
+
+// Register verify commands
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	// Get command by name
+	const command = client.action.get(interaction.commandName);
+	if (!command) return; // return if the command is null
 
 	// Try to execute 
 	await command.execute(interaction);

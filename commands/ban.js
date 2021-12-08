@@ -38,11 +38,11 @@ module.exports = {
             return;
         }
 
-        var user, reason, time // Accessibility
+        var user, reason, time; // Accessibility
         try {
             // Get interaction options
             user = interaction.options.getUser(`user`);
-            reason = interaction.options.getString('reason')
+            reason = interaction.options.getString('reason');
             time = interaction.options.getInteger('time');
 
             if (time === undefined)

@@ -20,6 +20,7 @@ function getEmbed(member) {
         .setAuthor(member.user.username, member.user.avatarURL())
         .setDescription(`Goodbye, ${member.user}...`)
         .setImage(byeGif[(Math.round(Math.random()) * (byeGif.length - 1))])
+        .setThumbnail(byeGif[(Math.round(Math.random()) * (byeGif.length - 1))])
         .setTimestamp()
         .setFooter(`Why'd you have to fuck off this way...`, member.guild.iconURL());
 

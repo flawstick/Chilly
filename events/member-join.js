@@ -18,8 +18,10 @@ function getEmbed(member) {
     const greetEmbed = new MessageEmbed()
         .setColor('#0099ff')
         .setAuthor(member.user.username, member.user.avatarURL())
-        .setDescription(`Welcome to C H I L L V E R S E, ${member.user}`)
+        .setTitle(`Welcome to CHILLVERSE <3`)
+        .setDescription(`Enjoy your time in our server :), if you need any help contact an admin.`)
         .setImage(welcomeGif[(Math.round(Math.random()) * (welcomeGif.length - 1))])
+        .setThumbnail(welcomeGif[(Math.round(Math.random()) * (welcomeGif.length - 1))])
         .setTimestamp()
         .setFooter('Have fun in our server!', member.guild.iconURL());
 

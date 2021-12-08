@@ -55,11 +55,11 @@ module.exports = {
             const member = interaction.guild.members.cache.get(user.id);
 
             // Mute/ Unmute member
-            if (member.roles.cache.find(role => role.name === 'muted') === undefined) {
-                await member.roles.add(interaction.guild.roles.cache.find(role => role.name === 'muted'), reason); // Mutes member
+            if (member.roles.cache.find(role => role.name === 'Muted') === undefined) {
+                await member.roles.add(interaction.guild.roles.cache.find(role => role.name === 'Muted'), reason); // Mutes member
                 flag = `muted`;
             } else {
-                await member.roles.remove(interaction.guild.roles.cache.find(role => role.name === 'muted'), reason); // Unmutes member
+                await member.roles.remove(interaction.guild.roles.cache.find(role => role.name === 'Muted'), reason); // Unmutes member
                 flag = `unmuted`;
             }
 
