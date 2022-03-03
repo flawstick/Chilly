@@ -41,7 +41,10 @@ module.exports = {
 
 		// Set permissions
 		if (interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR) === false) {
-			interaction.reply({ content: `You're unable to use this command.`, ephemeral: true});
+			interaction.reply({
+				content: `You're unable to use this command.`,
+				ephemeral: true
+			});
 			Log(`[WARN] [REACTION ROLE COMMAND] ${interaction.member.user.tag} tried using reaction role command without permission.`);
 			return;
 		}

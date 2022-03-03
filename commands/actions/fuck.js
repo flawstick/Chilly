@@ -1,29 +1,46 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
-const { join } = require("path");
+const {
+    SlashCommandBuilder
+} = require('@discordjs/builders');
+const {
+    MessageEmbed
+} = require('discord.js');
+const {
+    join
+} = require("path");
 
-const { fuck } = require(join(process.cwd(), '/database/data/actions.json'));
-const { Log } = require(join(process.cwd(), '/utils/log.js'));
+const {
+    fuck,
+    awkward
+} = require(join(process.cwd(), '/database/data/actions.json'));
+const {
+    Log
+} = require(join(process.cwd(), '/utils/log.js'));
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('fuck')
-		.setDescription('Fuck a guild member')
+    data: new SlashCommandBuilder()
+        .setName('fuck')
+        .setDescription('Fuck a guild member')
         .addUserOption(option =>
             option.setName('member')
-             .setDescription('User to fuck')
-             .setRequired(true)),
+            .setDescription('User to fuck')
+            .setRequired(true)),
 
-	async execute(interaction) {
-		const member = interaction.options.getUser('member');
+    async execute(interaction) {
+        const member = interaction.options.getUser('member');
 
         const embed = new MessageEmbed()
             .setColor('#0099ff')
             .setDescription(`${interaction.member.user} fucked ${member}! Premarital sex btw.`)
             .setImage(fuck[(Math.round(Math.random()) * (fuck.length - 1))])
             .setTimestamp();
-            
-        await interaction.reply({ embeds: [embed] });
+
+        if (interaction.user === member.user)
+            embed.setImage(awkward[(Math.round(Math.random()) * (slap.length - 1))]);
+        embed.setDescription(`No bitches?`);
+
+        await interaction.reply({
+            embeds: [embed]
+        });
         Log(`[INFO] [ACTION] [FUCK] ${interaction.member.user.tag} used fuck on ${member.tag}`);
-	},
+    },
 };

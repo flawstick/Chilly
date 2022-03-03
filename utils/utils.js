@@ -11,6 +11,9 @@ const cacheReactionMessages = async function (client) {
 
     // Caching members for role management
     client.guilds.cache.get(guildId).members.fetch();
+
+    // Cache channels 
+    client.guilds.cache.get(guildId).channels.fetch();
 }
 
 const checkValueJsonArray = async function (array, value) {
