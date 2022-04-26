@@ -15,6 +15,7 @@ const {
 	guildId,
 	verify,
 	reaction_roles,
+	color_roles,
 	apply
 } = require('./config.json');
 const {
@@ -197,7 +198,7 @@ client.on('interactionCreate', async interaction => {
 
 //-------------------------------------------------------------------------------------------
 
-// Register verify commands
+// Register apply commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
@@ -216,7 +217,7 @@ client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
 	// Return if the interactiopn isnt in the command seciton
-	if (interaction.channel.id !== reaction_roles) return;
+	if (interaction.channel.id !== reaction_roles || interaction.channel.id !== color_roles) return;
 
 	// Get command by name
 	const command = client.reactions.get(interaction.commandName);
