@@ -34,9 +34,10 @@ module.exports = {
             .setImage(fuck[(Math.round(Math.random()) * (fuck.length - 1))])
             .setTimestamp();
 
-        if (interaction.user === member.user)
-            embed.setImage(awkward[(Math.round(Math.random()) * (slap.length - 1))]);
-        embed.setDescription(`No bitches?`);
+        if (interaction.user.id === member.user.id) {
+            embed.setImage(awkward[(Math.round(Math.random()) * (fuck.length - 1))]);
+            embed.setDescription(`No bitches?`);
+        }
 
         await interaction.reply({
             embeds: [embed]

@@ -34,9 +34,10 @@ module.exports = {
             .setImage(kill[(Math.round(Math.random()) * (kill.length - 1))])
             .setTimestamp();
 
-        if (interaction.user === member.user)
-            embed.setImage(awkward[(Math.round(Math.random()) * (slap.length - 1))]);
-        embed.setDescription(`We turning into henry khoury?`);
+        if (interaction.user.id === member.user.id) {
+            embed.setImage(awkward[(Math.round(Math.random()) * (kill.length - 1))]);
+            embed.setDescription(`We turning into henry khoury?`);
+        }
 
         await interaction.reply({
             embeds: [embed]
