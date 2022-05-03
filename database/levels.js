@@ -92,21 +92,21 @@ const addLevel = async function (uuid) {
             // Fetch specefic member into cache by id
             const member = client.guilds.cache.get(guildId).members.cache.get(uuid);
 
-            // If that member has reached a role advancing thershold
-            if ((results[0].level + 1) % 10 == 0) {
-
-                // We increase the role depending on the level value
-                if (results[0].level + 1 == 10)
-                    member.roles.add(comets); // Level 10+
-                else if (results[0].level + 1 == 20)
-                    member.roles.add(moons); // Level 20+
-                else if (results[0].level + 1 == 30)
-                    member.roles.add(stars); // Level 30+
-                else if (results[0].level + 1 == 40)
-                    member.roles.add(solarSystems); // Level 40+
-                else if (results[0].level + 1 == 50)
-                    member.roles.add(neutronStars); // Level 50+
+            // UWU JSON OBJECT
+            const uwu = {
+                1: comets,
+                2: moons,
+                3: stars,
+                4: solarSystems,
+                5: neutronStars
             }
+
+            // If that member has reached a role advancing thershold
+            if ((results[0].level + 1) % 10 == 0) 
+                
+                // Set the appropriate role to level
+                member.roles.add(uwu[(results[0].level + 1) / 10]); 
+            
 
         } else // Catch error
             Log(`[ERROR] [LEVEL] [ADD] Couldn't add level to uuid: '${uuid}'`);
@@ -120,7 +120,7 @@ const getLeftForLevel = function (level, xp) {
     // Geometric chain equation
     const neededForLevel = levelOneThreshold * Math.pow(chainMultiplier, level - 1);
 
-    // Geometric chain equation
+    // Geometric series equation
     // An = A1 * q^n-1
 
     // Return the needed amount to level up

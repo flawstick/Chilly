@@ -25,7 +25,7 @@ module.exports = {
     async execute(interaction) {
 
         // Set permissions
-        if (interaction.member.permissions.has(Permissions.FLAGS.MUTE_MEMBERS) === false) {
+        if (interaction.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS) === false) {
             interaction.reply({
                 content: `You're unable to use this command.`,
                 ephemeral: true
@@ -62,7 +62,7 @@ module.exports = {
         }
 
         // Feedback, and log
-        Log(`[INFO] [MUTE] [${interaction.member.user.tag}] ${user.tag} was kicked, Reason: ${reason}`);
+        Log(`[INFO] [KICK] [${interaction.member.user.tag}] ${user.tag} was kicked, Reason: ${reason}`);
         interaction.reply(`Successfully kicked ${user}! Reason: ${reason}`);
     },
 }
