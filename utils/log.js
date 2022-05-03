@@ -48,7 +48,7 @@ const logToDiscord = function (channel, tags ,string) {
 }
 
 // Logging function
-const Log = function (tags, string) {
+const Log = async function (tags, string) {
     console.log(tags + " " + string);
     logToDiscord(channel, tags, string); // Declared above
 }
