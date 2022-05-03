@@ -25,7 +25,7 @@ module.exports = {
     async execute(interaction) {
 
         // Set permissions
-        if (interaction.member.permissions.has(Permissions.FLAGS.MUTE_MEMBERS) === false) {
+        if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS) === false) {
             interaction.reply({
                 content: `You're unable to use this command.`,
                 ephemeral: true

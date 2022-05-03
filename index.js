@@ -168,8 +168,6 @@ const rest = new REST({
 // Register commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
-	if (interaction.channel.id === verify) return;
-	if (interaction.channel.id === apply) return;
 
 	// Get command by name
 	const command = client.commands.get(interaction.commandName);
@@ -181,24 +179,7 @@ client.on('interactionCreate', async interaction => {
 
 //-------------------------------------------------------------------------------------------
 
-// Register verify commands
-client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
-
-	// Return if the interactiopn isnt in the command seciton
-	if (interaction.channel.id !== verify) return;
-
-	// Get command by name
-	const command = client.verify.get(interaction.commandName);
-	if (!command) return; // return if the command isn't verify
-
-	// Try to execute 
-	await command.execute(interaction);
-});
-
-//-------------------------------------------------------------------------------------------
-
-// Register apply commands
+// Register actions commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
@@ -221,23 +202,6 @@ client.on('interactionCreate', async interaction => {
 
 	// Get command by name
 	const command = client.reactions.get(interaction.commandName);
-	if (!command) return; // return if the command isn't there
-
-	// Try to execute 
-	await command.execute(interaction);
-});
-
-//-------------------------------------------------------------------------------------------
-
-// Register apply commands
-client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
-
-	// Return if the interactiopn isnt in the command seciton
-	if (interaction.channel.id !== apply) return;
-
-	// Get command by name
-	const command = client.apply.get(interaction.commandName);
 	if (!command) return; // return if the command isn't there
 
 	// Try to execute 

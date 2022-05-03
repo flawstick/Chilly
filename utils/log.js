@@ -1,6 +1,11 @@
 const {
+    MessageEmbed
+} = require('discord.js');
+
+const {
     log
 } = require('../config.json');
+
 
 var channel = null; // Channel variable
 const initLog = async function (client) {
@@ -11,7 +16,11 @@ const initLog = async function (client) {
 // Logging into discord function
 const logToDiscord = function (channel, string) {
     try {
-        channel.send(string);
+        const embed = new MessageEmbed()
+            .setColor('#0099ff')
+            .setDescription(string)
+            .setTimestamp();
+        channel.send(embed);
         return true;
     } catch (error) {
         console.log(`[ERROR] [LOGGER] ${error}`);
