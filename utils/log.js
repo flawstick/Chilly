@@ -10,16 +10,23 @@ const {
     client
 } = require('../index');
 
+const {
+    welcomeGif
+} = require('../config.json')
+
 
 var channel = null; // Channel variable
+var username = null; // Username of bot
+var avatarURL = null // Avatar of bot
+
 const initLog = async function (client) {
     channel = await client.channels.fetch(log); // Initialise variable
     console.log('[INFO] [LOGGER] Logger initialized!'); // Log initilization
-}
 
-// Store in variables so the application doesn't fetch them every single time it logs
-const username = client.user.username; // Username of bot
-const avatarURL = client.user.avatarURL(); // Avatar of bot
+    // Store in variables so the application doesn't fetch them every single time it logs
+    username = client.user.username; // Username of bot
+    avatarURL = client.user.avatarURL(); // Avatar of bot
+}
 
 // Logging into discord function
 const logToDiscord = function (channel, tags ,string) {
@@ -27,8 +34,8 @@ const logToDiscord = function (channel, tags ,string) {
         const embed = new MessageEmbed()
             .setColor('#0099ff')
             .setAuthor(username, avatarURL)
-            .setTitle(`Tags: ${tags}`)
-            .setDescription(string)
+            .setTitle(`${tags}`)
+            .setDescription(`${string}`)
             .setThumbnail(welcomeGif[0])
             .setTimestamp()
 
@@ -43,7 +50,7 @@ const logToDiscord = function (channel, tags ,string) {
 // Logging function
 const Log = function (tags, string) {
     console.log(tags + " " + string);
-    logToDiscord(channel, string); // Declared above
+    logToDiscord(channel, tags, string); // Declared above
 }
 
 module.exports = {
