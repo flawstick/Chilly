@@ -34,7 +34,7 @@ module.exports = {
             .setImage(slap[(Math.round(Math.random()) * (slap.length - 1))])
             .setTimestamp()
 
-        if (interaction.user.id === member.user.id) {
+        if (interaction.user.id === member.id) {
             embed.setImage(awkward[(Math.round(Math.random()) * (slap.length - 1))]);
             embed.setDescription(`We don't do that here 7bebe`);
         }

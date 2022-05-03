@@ -34,7 +34,7 @@ module.exports = {
             .setImage(kill[(Math.round(Math.random()) * (kill.length - 1))])
             .setTimestamp();
 
-        if (interaction.user.id === member.user.id) {
+        if (interaction.user.id === member.id) {
             embed.setImage(awkward[(Math.round(Math.random()) * (kill.length - 1))]);
             embed.setDescription(`We turning into henry khoury?`);
         }

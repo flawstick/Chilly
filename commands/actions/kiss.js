@@ -34,7 +34,7 @@ module.exports = {
             .setImage(kiss[(Math.round(Math.random()) * (kiss.length - 1))])
             .setTimestamp();
 
-        if (interaction.user.id === member.user.id) {
+        if (interaction.user.id === member.id) {
             embed.setImage(awkward[(Math.round(Math.random()) * (kiss.length - 1))]);
             embed.setDescription(`Nyakat`);
         }

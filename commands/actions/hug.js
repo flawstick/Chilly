@@ -34,7 +34,7 @@ module.exports = {
             .setImage(hug[(Math.round(Math.random()) * (hug.length - 1))])
             .setTimestamp();
 
-        if (interaction.user.id === member.user.id) {
+        if (interaction.user.id === member.id) {
             embed.setImage(awkward[(Math.round(Math.random()) * (hug.length - 1))]);
             embed.setDescription(`I'm sorry man I can't find the urge to make fun of you on this`);
         }
