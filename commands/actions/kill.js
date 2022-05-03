@@ -42,6 +42,6 @@ module.exports = {
         await interaction.reply({
             embeds: [embed]
         });
-        Log(`[INFO] [ACTION] [KILL] ${interaction.member.user.tag} used kill on ${member.tag}`);
+        Log(`[INFO] [ACTION] [KILL]`, `${interaction.member.user.tag} used kill on ${member.tag}`);
     },
 };

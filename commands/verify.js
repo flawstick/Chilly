@@ -39,7 +39,7 @@ module.exports = {
             });
 
             // Log output
-            Log(`[INFO] [VERIFY] [${interaction.member.user.tag}] verified as a human and is now a resident!`);
+            Log(`[INFO] [VERIFY]`, `[${interaction.member.user.tag}] verified as a human and is now a resident!`);
         } else {
 
             // Reply to message ephemerally
@@ -49,7 +49,7 @@ module.exports = {
             });
 
             // Log output
-            Log(`[WARN] [VERIFY] [${interaction.member.user.tag}] tried to verify when they already are verified!`);
+            Log(`[WARN] [VERIFY]`, `[${interaction.member.user.tag}] tried to verify when they already are verified!`);
         }
     },
 };

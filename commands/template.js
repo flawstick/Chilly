@@ -36,7 +36,7 @@ We will now begin your template, enter your name:
             content: 'A message has been sent to your dms!',
             ephemeral: true
         });
-        Log(`[INFO] [TEMAPLTE] ${interaction.member.user.tag} has started building a template!`);
+        Log(`[INFO] [TEMAPLTE]`, `${interaction.member.user.tag} has started building a template!`);
 
         const collected = new Map();
         try {
@@ -110,7 +110,7 @@ We will now begin your template, enter your name:
                 return;
 
         } catch (error) {
-            Log(`[ERROR] [TEMPLATE] [TIMEOUT] ${interaction.member.user.tag}'s template build has timed out!`);
+            Log(`[ERROR] [TEMPLATE] [TIMEOUT]`, `${interaction.member.user.tag}'s template build has timed out!`);
             return;
         }
 

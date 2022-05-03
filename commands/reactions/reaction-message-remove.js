@@ -40,7 +40,7 @@ module.exports = {
 				content: `You're unable to use this command.`,
 				ephemeral: true
 			});
-			Log(`[WARN] [REACTION ROLE COMMAND] ${interaction.member.user.tag} tried using reaction role command without permission.`);
+			Log(`[WARN] [REACTION ROLE COMMAND]`, `${interaction.member.user.tag} tried using reaction role command without permission.`);
 			return;
 		}
 
@@ -60,7 +60,7 @@ module.exports = {
 		} catch (error) {
 
 			// Log error and delete message.
-			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
+			Log(`[ERROR] [REACTION ROLES COMMAND]`, `${error}`);
 			await reply.edit({
 				content: 'Could not find message'
 			});
@@ -77,7 +77,7 @@ module.exports = {
 		} catch (error) {
 
 			// Log error and delete message.
-			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
+			Log(`[ERROR] [REACTION ROLES COMMAND]`, `${error}`);
 			await reply.edit({
 				content: 'Could not find emoji'
 			});
@@ -99,7 +99,7 @@ module.exports = {
 			if (existance === false) {
 
 				// Log error and delete message.
-				Log(`[ERROR] [REACTION ROLES COMMAND] [REMOVE] [MESSAGE] Message ${messageId} does not contain any reaction roles!`);
+				Log(`[ERROR] [REACTION ROLES COMMAND] [REMOVE] [MESSAGE]`, `Message ${messageId} does not contain any reaction roles!`);
 				reply.edit({
 					content: 'Message is not a reaction role message!'
 				});
@@ -110,7 +110,7 @@ module.exports = {
 			reaction_roles.messages = reaction_roles.messages.splice(existance, 1);
 
 			// Log to console
-			Log("[INFO] [REACTION ROLES COMMAND] [REMOVE] [MESSAGE] Removed message: " + messageId);
+			Log(`[INFO] [REACTION ROLES COMMAND] [REMOVE] [MESSAGE]`, `Removed message: ${messageId}`);
 
 			// Write the Json back into the file
 			writeFile(reaction_roles_json, JSON.stringify(reaction_roles), (err) => {

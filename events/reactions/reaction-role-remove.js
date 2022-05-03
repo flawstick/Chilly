@@ -49,7 +49,7 @@ module.exports = {
                     member.roles.remove(role);
 
                 // Log to console
-                Log("[INFO] [REACTION ROLE] [REMOVE] The role [" + role.name + "] was removed from the guild member: " + member.user.tag);
+                Log(`[INFO] [REACTION ROLE] [REMOVE]`, `The role [${role.name}] was removed from the guild member: ${member.user.tag}`);
             }
         });
     },

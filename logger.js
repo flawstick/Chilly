@@ -9,7 +9,7 @@ module.exports.init = async function (client) {
     PARAMETER    TYPE        DESCRIPTION
     channel      Channel     The channel that was created    */
     client.on("channelCreate", function (channel) {
-        Log(`[INFO] [CHANNEL] [CREATE] Channel created: ${channel.name}`);
+        Log(`[INFO] [CHANNEL] [CREATE]`, `Channel created: ${channel.name}`);
     });
 
     // channelDelete
@@ -17,7 +17,7 @@ module.exports.init = async function (client) {
     PARAMETER   TYPE      DESCRIPTION
     channel     Channel   The channel that was deleted    */
     client.on("channelDelete", function (channel) {
-        Log(`[INFO] [CHANNEL] [DELETE] Channel deleted: ${channel.name}`);
+        Log(`[INFO] [CHANNEL] [DELETE]`, `Channel deleted: ${channel.name}`);
     });
 
     // channelPinsUpdate
@@ -27,7 +27,7 @@ module.exports.init = async function (client) {
     channel      Channel      The channel that the pins update occurred in
     time         Date         The time of the pins update    */
     client.on("channelPinsUpdate", function (channel, time) {
-        Log(`[INFO] [CHANNEL] [PINS] ${channel.name} pins are updated! Time: ${time}`);
+        Log(`[INFO] [CHANNEL] [PINS]`, `${channel.name} pins are updated! Time: ${time}`);
     });
 
     // channelUpdate
@@ -36,7 +36,7 @@ module.exports.init = async function (client) {
     oldChannel       Channel     The channel before the update
     newChannel       Channel     The channel after the update    */
     client.on("channelUpdate", function (oldChannel, newChannel) {
-        Log(`[INFO] [CHANNEL] [UPDATE] Name: ${oldChannel.name} : ${newChannel.name}. Topic: ${oldChannel.topic} : ${newChannel.topic}`);
+        Log(`[INFO] [CHANNEL] [UPDATE]`, `Name: ${oldChannel.name} : ${newChannel.name}. Topic: ${oldChannel.topic} : ${newChannel.topic}`);
     });
 
     // disconnect
@@ -44,7 +44,7 @@ module.exports.init = async function (client) {
     PARAMETER    TYPE              DESCRIPTION
     Event        CloseEvent        The WebSocket close event    */
     client.on("disconnect", function (event) {
-        Log(`[CLIENT] [DISCONNECT] ${client.name} Disconnected!`);
+        Log(`[CLIENT] [DISCONNECT]`, `${client.name} Disconnected!`);
     });
 
     // emojiCreate
@@ -52,7 +52,7 @@ module.exports.init = async function (client) {
     PARAMETER    TYPE          DESCRIPTION
     emoji        Emoji         The emoji that was created    */
     client.on("emojiCreate", function (emoji) {
-        Log(`[INFO] [EMOJI] [CREATE] Guild emoji created: ${emoji.toString()}`);
+        Log(`[INFO] [EMOJI] [CREATE]`, `Guild emoji created: ${emoji.toString()}`);
     });
 
     // emojiDelete
@@ -60,7 +60,7 @@ module.exports.init = async function (client) {
     PARAMETER    TYPE         DESCRIPTION
     emoji        Emoji        The emoji that was deleted    */
     client.on("emojiDelete", function (emoji) {
-        Log(`[INFO] [EMOJI] [DELETE] Guild emoji deleted: ${emoji.toString()}`);
+        Log(`[INFO] [EMOJI] [DELETE]`, `Guild emoji deleted: ${emoji.toString()}`);
     });
 
     // emojiUpdate
@@ -69,7 +69,7 @@ module.exports.init = async function (client) {
     oldEmoji     Emoji      The old emoji
     newEmoji     Emoji      The new emoji    */
     client.on("emojiUpdate", function (oldEmoji, newEmoji) {
-        Log(`[INFO] [EMOJI] [UPDATE] Guild emoji updated!: ${newEmoji.toString()}`);
+        Log(`[INFO] [EMOJI] [UPDATE]`, `Guild emoji updated!: ${newEmoji.toString()}`);
     });
 
     // guildBanAdd
@@ -78,7 +78,7 @@ module.exports.init = async function (client) {
     guild        Guild         The guild that the ban occurred in
     user         User          The user that was banned    */
     client.on("guildBanAdd", function (guild, user) {
-        Log(`[INFO] [BAN] a member has been banned from the guild!`);
+        Log(`[INFO] [BAN]`, `a member has been banned from the guild!`);
     });
 
     // guildBanRemove
@@ -87,7 +87,7 @@ module.exports.init = async function (client) {
     guild        Guild        The guild that the unban occurred in
     user         User         The user that was unbanned    */
     client.on("guildBanRemove", function (guild, user) {
-        Log(`[INFO] [UNBAN] a member has been unbanned from the guild!`);
+        Log(`[INFO] [UNBAN]`, `a member has been unbanned from the guild!`);
     });
 
     // guildMemberUpdate
@@ -96,7 +96,7 @@ module.exports.init = async function (client) {
     oldMember    GuildMember        The member before the update
     newMember    GuildMember        The member after the update    */
     client.on("guildMemberUpdate", function (oldMember, newMember) {
-        Log(`[INFO] [MEMBER] [UPDATE] ${newMember.user.tag}'s roles or nickname were updated!`);
+        Log(`[INFO] [MEMBER] [UPDATE]`, `${newMember.user.tag}'s roles or nickname were updated!`);
     });
 
     // messageDelete
@@ -104,7 +104,7 @@ module.exports.init = async function (client) {
     PARAMETER      TYPE           DESCRIPTION
     message        Message        The deleted message    */
     client.on("messageDelete", function (message) {
-        Log(`[INFO] [MESSAGE] [DELETE] ${message.id} was deleted from ${message.channel}`);
+        Log(`[INFO] [MESSAGE] [DELETE]`, `${message.id} was deleted from ${message.channel}`);
     });
 
     // messageDeleteBulk
@@ -112,7 +112,7 @@ module.exports.init = async function (client) {
     PARAMETER    TYPE                              DESCRIPTION
     messages     Collection<Snowflake, Message>    The deleted messages, mapped by their ID    */
     client.on("messageDeleteBulk", function (messages) {
-        Log(`[INFO] [MESSAGE] [DELETE] a bulk of message was deleted`);
+        Log(`[INFO] [MESSAGE] [DELETE]`, `a bulk of message was deleted`);
     });
 
     // messageUpdate
@@ -121,7 +121,7 @@ module.exports.init = async function (client) {
     oldMessage    Message        The message before the update
     newMessage    Message        The message after the update    */
     client.on("messageUpdate", function (oldMessage, newMessage) {
-        Log(`[INFO] [MESSAGE] [UPDATE] ${newMessage.id} was updated. Channel: ${newMessage.channel}`);
+        Log(`[INFO] [MESSAGE] [UPDATE]`, `${newMessage.id} was updated. Channel: ${newMessage.channel}`);
     });
 
     // roleCreate
@@ -129,7 +129,7 @@ module.exports.init = async function (client) {
     PARAMETER    TYPE        DESCRIPTION
     role         Role        The role that was created    */
     client.on("roleCreate", function (role) {
-        Log(`[INFO] [ROLE] [CREATE] A role was created! Role: ${role.name}`);
+        Log(`[INFO] [ROLE] [CREATE]`, `A role was created! Role: ${role.name}`);
     });
 
     // roleDelete
@@ -137,7 +137,7 @@ module.exports.init = async function (client) {
     PARAMETER    TYPE        DESCRIPTION
     role         Role        The role that was deleted    */
     client.on("roleDelete", function (role) {
-        Log(`[INFO] [ROLE] [DELETE] A role was deleted! Role: ${role.name}`);
+        Log(`[INFO] [ROLE] [DELETE]`, `A role was deleted! Role: ${role.name}`);
     });
 
     // roleUpdate
@@ -146,6 +146,6 @@ module.exports.init = async function (client) {
     oldRole        Role        The role before the update
     newRole        Role        The role after the update    */
     client.on("roleUpdate", function (oldRole, newRole) {
-        Log(`[INFO] [ROLE] [UPDATE] A role was updated! Role: ${oldRole.name} : ${newRole.name}`);
+        Log(`[INFO] [ROLE] [UPDATE]`, `role was updated! Role: ${oldRole.name} : ${newRole.name}`);
     });
 }

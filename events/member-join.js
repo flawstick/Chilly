@@ -33,7 +33,7 @@ module.exports = {
     // User join event
     name: 'guildMemberAdd',
     async execute(member) {
-        Log(`[INFO] [JOIN] [${member.user.tag}] has joined the server!`);
+        Log(`[INFO] [JOIN]`, `[${member.user.tag}] has joined the server!`);
 
         // Welcome in welcome channel
         member.guild.channels.cache.find(channel => channel.id === welcome).send({

@@ -9,9 +9,7 @@ const {
 } = require('../database/connection.js');
 
 const logger = require('../logger.js');
-const {
-    client
-} = require('../index.js');
+
 
 module.exports = {
 

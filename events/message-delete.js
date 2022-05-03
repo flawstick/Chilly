@@ -21,10 +21,10 @@ module.exports = {
         if (existance === false) return; // Return if channel does not exist
 
         // Log attempt
-        Log(`[WARN] [ILLEGAL MESSAGE] ${message.author.tag} tried to send a message to channel: ${message.channel.name}`);
+        Log(`[WARN] [ILLEGAL MESSAGE]`, `${message.author.tag} tried to send a message to channel: ${message.channel.name}`);
         await message.delete(); // Delete message
 
         // Log deletion
-        Log(`[WARN] [ILLEGAL MESSAGE] Illegal message sent by ${message.author.tag} deleted.`);
+        Log(`[WARN] [ILLEGAL MESSAGE]`, `Illegal message sent by ${message.author.tag} deleted.`);
     },
 }

@@ -52,7 +52,7 @@ module.exports = {
 				content: `You're unable to use this command.`,
 				ephemeral: true
 			});
-			Log(`[WARN] [REACTION ROLE COMMAND] ${interaction.member.user.tag} tried using reaction role command without permission.`);
+			Log(`[WARN] [REACTION ROLE COMMAND]`, `${interaction.member.user.tag} tried using reaction role command without permission.`);
 			return;
 		}
 
@@ -64,8 +64,8 @@ module.exports = {
 
 		// Make sure max isn't null for players to interact
 		if (max === null) {
-			console.log('[WARN] [REACTION ROLE COMMAND] [NO MAX] No max has been set, set to 500');
-			max = 500;
+			console.log(`[WARN] [REACTION ROLE COMMAND] [NO MAX]`, `No max has been set, set to 50`);
+			max = 50;
 		}
 
 		// Reply to message to get specefic channel
@@ -81,7 +81,7 @@ module.exports = {
 		} catch (error) {
 
 			// Log error and delete message.
-			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
+			Log(`[ERROR] [REACTION ROLES COMMAND]`, `${error}`);
 			await reply.edit({
 				content: 'Could not find message'
 			});
@@ -96,7 +96,7 @@ module.exports = {
 		} catch (error) {
 
 			// Log error and delete message.
-			Log(`[ERROR] [REACTION ROLES COMMAND] ${error} `);
+			Log(`[ERROR] [REACTION ROLES COMMAND]`, `${error}`);
 			await reply.edit({
 				content: 'Could not find emoji'
 			});
@@ -122,7 +122,7 @@ module.exports = {
 				reaction_roles.messages.push(JSON.parse(reaction_role));
 
 				// Log to console
-				Log("[INFO] [REACTION ROLES COMMAND] [MESSAGE] Added new message ");
+				Log(`[INFO] [REACTION ROLES COMMAND] [MESSAGE]`, `Added new message`);
 			} else {
 
 				// Add roles to the message array object
@@ -130,7 +130,7 @@ module.exports = {
 				reaction_roles.messages[existance][messageId.toString()].push(JSON.parse(reaction_role));
 
 				// Log to console
-				Log("[INFO] [REACTION ROLES COMMAND] [REACTION] Added new reaction to message: " + messageId.toString());
+				Log(`[INFO] [REACTION ROLES COMMAND] [REACTION]`, `Added new reaction to message: ${messageId.toString()}`);
 			}
 
 			// Write the Json back into the file

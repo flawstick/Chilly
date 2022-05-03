@@ -34,7 +34,7 @@ module.exports = {
                 content: `You're unable to use this command.`,
                 ephemeral: true
             });
-            Log(`[WARN] [BAN] ${interaction.member.user.tag} tried using ${interaction.name} command without permission.`);
+            Log(`[WARN] [BAN]`, `${interaction.member.user.tag} tried using ${interaction.name} command without permission.`);
             return;
         }
 
@@ -48,7 +48,7 @@ module.exports = {
             if (time === undefined)
                 time = 1; // Not require option default.
         } catch (error) {
-            Log(`[ERROR] [BAN] [${interaction.member.user.tag}] Couldn't process command options. Error: ${error}`);
+            Log(`[ERROR] [BAN]`, `[${interaction.member.user.tag}] Couldn't process command options. Error: ${error}`);
             interaction.reply({
                 content: `Couldn't process command options.`,
                 ephemeral: true
@@ -63,7 +63,7 @@ module.exports = {
             });
 
         } catch (error) {
-            Log(`[ERROR] [BAN] [${interaction.member.user.tag}] Could not ban guild member ${user.tag}, Error: ${error}`);
+            Log(`[ERROR] [BAN]`, `[${interaction.member.user.tag}] Could not ban guild member ${user.tag}, Error: ${error}`);
             interaction.reply({
                 content: `Couldn't ban member`,
                 ephemeral: true
@@ -72,7 +72,7 @@ module.exports = {
         }
 
         // Feedback, and log
-        Log(`[INFO] [BAN] [${interaction.member.user.tag}] Successfully banned ${user.tag} , Reason: ${reason}`);
+        Log(`[INFO] [BAN]`, `[${interaction.member.user.tag}] Successfully banned ${user.tag} , Reason: ${reason}`);
         interaction.reply(`Successfully banned ${user}! Reason: ${reason}`);
     },
 }

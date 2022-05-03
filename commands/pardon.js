@@ -30,7 +30,7 @@ module.exports = {
                 content: `You're unable to use this command.`,
                 ephemeral: true
             });
-            Log(`[WARN] [PARDON] ${interaction.member.user.tag} tried using ${interaction.name} command without permission.`);
+            Log(`[WARN] [PARDON]`, `${interaction.member.user.tag} tried using ${interaction.name} command without permission.`);
             return;
         }
 
@@ -41,7 +41,7 @@ module.exports = {
             reason = interaction.options.getString('reason');
 
         } catch (error) {
-            Log(`[ERROR] [PARDON] [${interaction.member.user.tag}] Couldn't process command options. Error: ${error}`);
+            Log(`[ERROR] [PARDON]`, `[${interaction.member.user.tag}] Couldn't process command options. Error: ${error}`);
             interaction.reply({
                 content: `Couldn't process command options.`,
                 ephemeral: true
@@ -52,7 +52,7 @@ module.exports = {
         try {
             await interaction.guild.bans.remove(user, reason);
         } catch (error) {
-            Log(`[ERROR] [PARDON] [${interaction.member.user.tag}] Could not unban guild member ${user.tag}, Error: ${error}`);
+            Log(`[ERROR] [PARDON]`, `[${interaction.member.user.tag}] Could not unban guild member ${user.tag}, Error: ${error}`);
             interaction.reply({
                 content: `Couldn't unban member`,
                 ephemeral: true
@@ -61,7 +61,7 @@ module.exports = {
         }
 
         // Feedback, and log
-        Log(`[INFO] [PARDON] [${interaction.member.user.tag}] Successfully unbanned ${user.tag} , Reason: ${reason}`);
+        Log(`[INFO] [PARDON]`, `[${interaction.member.user.tag}] Successfully unbanned ${user.tag} , Reason: ${reason}`);
         interaction.reply(`Successfully unbanned ${user}! Reason: ${reason}`);
     },
 }

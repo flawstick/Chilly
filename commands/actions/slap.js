@@ -42,6 +42,6 @@ module.exports = {
         await interaction.reply({
             embeds: [embed]
         });
-        Log(`[INFO] [ACTION] [SLAP] ${interaction.member.user.tag} used slap on ${member.tag}`);
+        Log(`[INFO] [ACTION] [SLAP]`, `${interaction.member.user.tag} used slap on ${member.tag}`);
     },
 };

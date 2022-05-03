@@ -44,7 +44,7 @@ module.exports = {
 
                 if (checkLegalReaction(reaction.message, member.user, json["messages"][existance].max) === false) {
                     reaction.users.remove(member.user.id)
-                        .then(Log(`[WARN] [REACTION ROLE] [REMOVE] Member ${member.user.tag} tried to exceed max reactions in message`));
+                        .then(Log(`[WARN] [REACTION ROLE] [REMOVE]`, `Member ${member.user.tag} tried to exceed max reactions in message`));
                     return;
                 }
 
@@ -55,7 +55,7 @@ module.exports = {
                 member.roles.add(role);
 
                 // Log to console
-                Log("[INFO] [REACTION ROLE] [ADD] The role [" + role.name + "] was added to guild member: " + member.user.tag + " Emoji: " + reaction.emoji.name);
+                Log(`[INFO] [REACTION ROLE] [ADD]`, `The role [${role.name}] was added to guild member: ${member.user.tag} Emoji: ${reaction.emoji.name}`);
             }
         });
     },

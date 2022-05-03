@@ -30,7 +30,7 @@ module.exports = {
                 content: `You're unable to use this command.`,
                 ephemeral: true
             });
-            Log(`[WARN] [KICK] ${interaction.member.user.tag} tried using ${interaction.name} command without permission.`);
+            Log(`[WARN] [KICK]`, `${interaction.member.user.tag} tried using ${interaction.name} command without permission.`);
             return;
         }
 
@@ -40,7 +40,7 @@ module.exports = {
             user = interaction.options.getUser(`user`);
             reason = interaction.options.getString('reason');
         } catch (error) {
-            Log(`[ERROR] [KICK] [${interaction.member.user.tag}] Couldn't process command options. Error: ${error}`);
+            Log(`[ERROR] [KICK]`, `[${interaction.member.user.tag}] Couldn't process command options. Error: ${error}`);
             interaction.reply({
                 content: `Couldn't process command options.`,
                 ephemeral: true
@@ -53,7 +53,7 @@ module.exports = {
             await interaction.guild.members.cache.get(user.id).kick(reason); // Kicks member
 
         } catch (error) {
-            Log(`[ERROR] [KICK] [${interaction.member.user.tag}] Could not kick guild member ${user.tag}, Error: ${error}`);
+            Log(`[ERROR] [KICK]`, `[${interaction.member.user.tag}] Could not kick guild member ${user.tag}, Error: ${error}`);
             interaction.reply({
                 content: `Couldn't kick member`,
                 ephemeral: true
@@ -62,7 +62,7 @@ module.exports = {
         }
 
         // Feedback, and log
-        Log(`[INFO] [KICK] [${interaction.member.user.tag}] ${user.tag} was kicked, Reason: ${reason}`);
+        Log(`[INFO] [KICK]`, `[${interaction.member.user.tag}] ${user.tag} was kicked, Reason: ${reason}`);
         interaction.reply(`Successfully kicked ${user}! Reason: ${reason}`);
     },
 }

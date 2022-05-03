@@ -30,7 +30,7 @@ module.exports = {
                 content: `You're unable to use this command.`,
                 ephemeral: true
             });
-            Log(`[WARN] [MUTE] ${interaction.member.user.tag} tried using ${interaction.name} command without permission.`);
+            Log(`[WARN] [MUTE]`, `${interaction.member.user.tag} tried using ${interaction.name} command without permission.`);
             return;
         }
 
@@ -40,7 +40,7 @@ module.exports = {
             user = interaction.options.getUser(`user`);
             reason = interaction.options.getString('reason');
         } catch (error) {
-            Log(`[ERROR] [MUTE] [${interaction.member.user.tag}] Couldn't process command options. Error: ${error}`);
+            Log(`[ERROR] [MUTE]`, `[${interaction.member.user.tag}] Couldn't process command options. Error: ${error}`);
             interaction.reply({
                 content: `Couldn't process command options.`,
                 ephemeral: true
@@ -64,7 +64,7 @@ module.exports = {
             }
 
         } catch (error) {
-            Log(`[ERROR] [MUTE] [${interaction.member.user.tag}] Could not mute/unmute guild member ${user.tag}, Error: ${error}`);
+            Log(`[ERROR] [MUTE]`, `[${interaction.member.user.tag}] Could not mute/unmute guild member ${user.tag}, Error: ${error}`);
             interaction.reply({
                 content: `Couldn't mute/unmute member`,
                 ephemeral: true
@@ -73,7 +73,7 @@ module.exports = {
         }
 
         // Feedback, and log
-        Log(`[INFO] [MUTE] [${interaction.member.user.tag}] ${user.tag} was ${flag}, Reason: ${reason}`);
+        Log(`[INFO] [MUTE]`, `[${interaction.member.user.tag}] ${user.tag} was ${flag}, Reason: ${reason}`);
         interaction.reply(`Successfully ${flag} ${user}! Reason: ${reason}`);
     },
 }

@@ -32,7 +32,7 @@ module.exports = {
     // User leave event
     name: 'guildMemberRemove',
     async execute(member) {
-        Log(`[INFO] [LEAVE] [${member.user.tag}] has left the server...`);
+        Log(`[INFO] [LEAVE]`, `[${member.user.tag}] has left the server...`);
 
         // Bye in bye channel
         member.guild.channels.cache.find(channel => channel.id === bye).send({

@@ -85,7 +85,7 @@ const addLevel = async function (uuid) {
             });
 
             // Tell people that level has been added to the player.
-            Log(`[INFO] [LEVEL] [ADD] added level to uuid: '${uuid}'`);
+            Log(`[INFO] [LEVEL] [ADD]`, `added level to uuid: '${uuid}'`);
             const channel = client.channels.cache.get(chat);
             channel.send(`<@${uuid}> you are now level ${results[0].level + 1}! <3`);
 
@@ -109,7 +109,7 @@ const addLevel = async function (uuid) {
             
 
         } else // Catch error
-            Log(`[ERROR] [LEVEL] [ADD] Couldn't add level to uuid: '${uuid}'`);
+            Log(`[ERROR] [LEVEL] [ADD]`, `Couldn't add level to uuid: '${uuid}'`);
     });
 }
 
