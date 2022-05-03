@@ -20,7 +20,7 @@ const logToDiscord = function (channel, string) {
             .setColor('#0099ff')
             .setDescription(string)
             .setTimestamp();
-        channel.send(embed);
+        channel.send({ embeds: [embed] });
         return true;
     } catch (error) {
         console.log(`[ERROR] [LOGGER] ${error}`);

@@ -84,41 +84,6 @@ for (const file of commandFiles) {
 
 //----------------------------------------------------------------------------------------
 
-// Make collection for staff application commands
-client.apply = new Collection();
-
-// Read reaction role command files
-commandFiles = fs.readdirSync('./commands/apply').filter(file => file.endsWith('apply.js'));
-
-// Initialize command collection
-var command = require(`./commands/apply/apply.js`);
-
-// Set a new item in the Collection
-// With the key as the command name and the value as the exported module
-client.apply.set(command.data.name, command);
-
-// Add everything into a
-// Json file to reload commands
-commands.push(command.data.toJSON());
-
-//----------------------------------------------------------------------------------------
-
-// Make collection for verifacation command
-client.verify = new Collection();
-
-// Get verify file
-command = require(`./commands/verify/verify.js`);
-
-// Set a new item in the Collection
-// With the key as the command name and the value as the exported module
-client.verify.set(command.data.name, command);
-
-// Add everything into a
-// Json format to reload commands
-commands.push(command.data.toJSON());
-
-//----------------------------------------------------------------------------------------
-
 // Make collection for verifacation command
 client.action = new Collection();
 
