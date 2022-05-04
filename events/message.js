@@ -13,7 +13,7 @@ module.exports = {
         if (message.author.id === clientId) return; // Ignore if it's the bot
 
         // Add xp to the user that sent the message
-        addXP(message.author.id, 25);
+        addXP(message.author.id, 50);
 
         // 1. 1000, 2. 1000 * 1.2, 3. 1000 * 1.2 ^ 2 chain system
     },

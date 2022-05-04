@@ -8,8 +8,8 @@ const {
     init
 } = require('../database/connection.js');
 const {
-    startboardInit
-} = require('./starboardInit.js');
+    starboardInit
+} = require('./starboard.js');
 
 const logger = require('../logger.js');
 
@@ -31,7 +31,7 @@ module.exports = {
         await initLog(client);
         console.log('[READY] [LOGGER] Logging started');
 
-        await startboardInit(client);
+        await starboardInit(client);
         console.log(`[READY] [STARBOARD] Starring ready`);
 
         // Initalize logger
