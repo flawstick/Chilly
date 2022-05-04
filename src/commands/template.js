@@ -8,7 +8,7 @@ const {
 const {
     intro,
     welcomeGif
-} = require('../config.json');
+} = require('../../config.json');
 const {
     Log
 } = require("../utils/log");

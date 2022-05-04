@@ -12,13 +12,13 @@ const {
 const {
 	checkMessageJsonArray,
 	checkEmojiJsonArray
-} = require('../ ../utils/reactions.js');
+} = require('../../utils/reactions.js');
 const {
 	Log
-} = require('../ ../utils/log.js');
+} = require('../../utils/log.js');
 const {
 	reaction_roles_json
-} = require('../ ../config.json');
+} = require('../../../config.json');
 
 module.exports = {
 

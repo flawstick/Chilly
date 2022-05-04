@@ -1,0 +1,26 @@
+{
+  "name": "chilly",
+  "version": "1.0.0",
+  "description": "Chilly discord bot",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flawstick/Chilly.git"
+  },
+  "author": "Amir.#6970",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/flawstick/Chilly/issues"
+  },
+  "homepage": "https://github.com/flawstick/Chilly#readme",
+  "dependencies": {
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.27.3",
+    "discord.js": "^13.6.0",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {}
+}

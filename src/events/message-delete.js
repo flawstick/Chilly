@@ -1,7 +1,7 @@
 const {
     noMessage,
     clientId
-} = require('../config.json');
+} = require('../../config.json');
 const {
     Log
 } = require('../utils/log.js');

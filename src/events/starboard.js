@@ -5,7 +5,7 @@ const {
     starCount,
     starboard,
     welcomeGif
-} = require('../config.json');
+} = require('../../config.json');
 const {
     Log
 } = require('../utils/log');

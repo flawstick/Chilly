@@ -3,13 +3,9 @@ const {
 } = require('discord.js');
 
 const {
-    log
-} = require('../config.json');
-
-const {
+    log,
     welcomeGif
-} = require('../config.json')
-
+} = require('../../config.json');
 
 var channel = null; // Logging channel 
 var username = null; // Username of bot

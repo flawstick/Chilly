@@ -4,16 +4,16 @@ const {
 
 const {
     Log
-} = require('../ ../utils/log.js');
+} = require('../../utils/log.js');
 const {
     checkMessageJsonArray,
     getEmojiJsonArray,
     checkLegalReaction
-} = require('../ ../utils/reactions.js');
+} = require('../../utils/reactions.js');
 const {
     reaction_roles_json,
     clientId
-} = require('../ ../config.json');
+} = require('../../../config.json');
 
 module.exports = {
 

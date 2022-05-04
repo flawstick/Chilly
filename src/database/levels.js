@@ -5,7 +5,7 @@ const {
     levelOneThreshold,
     chainMultiplier,
     chat
-} = require('../config.json');
+} = require('../../config.json');
 const {
     client
 } = require('../index.js');
@@ -19,7 +19,7 @@ const {
     solarSystems,
     neutronStars,
     guildId
-} = require('../config.json');
+} = require('../../config.json');
 
 // Add xp to the user
 const addXP = async function (uuid, amount) {

@@ -3,7 +3,7 @@ const {
 } = require('../database/levels.js');
 const {
     clientId
-} = require('../config.json');
+} = require('../../config.json');
 
 module.exports = {
 

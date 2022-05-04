@@ -8,10 +8,10 @@ const {
 const {
     fuck,
     awkward
-} = require('../ ../database/data/actions.json');
+} = require('../../database/data/actions.json');
 const {
     Log
-} = require('../ ../utils/log.js');
+} = require('../../utils/log.js');
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -1,7 +1,7 @@
 const {
     reaction_roles,
     guildId
-} = require('../config.json');
+} = require('../../config.json');
 
 // Cache everything needed for reaction roles.
 const cacheReactionMessages = async function (client) {

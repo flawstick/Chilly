@@ -13,11 +13,9 @@ const {
 	token,
 	clientId,
 	guildId,
-	verify,
 	reaction_roles,
 	color_roles,
-	apply
-} = require('./config.json');
+} = require('../config.json');
 const {
 	Routes
 } = require('discord-api-types/v9');
@@ -43,7 +41,7 @@ module.exports = {
 
 // Command collection (extends map)
 client.commands = new Collection();
-var commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+var commandFiles = fs.readdirSync('src/commands').filter(file => file.endsWith('.js'));
 
 // Array of commands for JSON
 var commands = [];
@@ -67,7 +65,7 @@ for (const file of commandFiles) {
 client.reactions = new Collection();
 
 // Read reaction role command files
-commandFiles = fs.readdirSync('./commands/reactions').filter(file => file.endsWith('.js'));
+commandFiles = fs.readdirSync('src/commands/reactions').filter(file => file.endsWith('.js'));
 
 // Initialize command collection
 for (const file of commandFiles) {
@@ -88,7 +86,7 @@ for (const file of commandFiles) {
 client.action = new Collection();
 
 // Read reaction role command files
-commandFiles = fs.readdirSync('./commands/actions').filter(file => file.endsWith('.js'));
+commandFiles = fs.readdirSync('src/commands/actions').filter(file => file.endsWith('.js'));
 
 // Initialize command collection
 for (const file of commandFiles) {
@@ -176,7 +174,7 @@ client.on('interactionCreate', async interaction => {
 //============================================================================================
 
 // Load event files	
-var eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+var eventFiles = fs.readdirSync('src/events').filter(file => file.endsWith('.js'));
 
 // Iterate through events
 for (const file of eventFiles) {
@@ -197,7 +195,7 @@ for (const file of eventFiles) {
 
 //-----------------------------------------------------------------------------------------------
 
-eventFiles = fs.readdirSync('./events/reactions').filter(file => file.endsWith('js'));
+eventFiles = fs.readdirSync('src/events/reactions').filter(file => file.endsWith('js'));
 
 // Iterate through events
 for (const file of eventFiles) {

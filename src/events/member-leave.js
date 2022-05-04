@@ -9,7 +9,7 @@ const {
     bye,
     chat,
     byeGif
-} = require('../config.json')
+} = require('../../config.json')
 
 // Return a MessageEmbed
 function getEmbed(member) {
