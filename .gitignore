@@ -1,6 +1,6 @@
 config.json
 package-lock.json
-events\reactions\reaction-roles.json
+src\events\reactions\reaction-roles.json
 package.json
 node_modules/
 data/

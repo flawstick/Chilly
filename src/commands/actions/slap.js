@@ -4,17 +4,14 @@ const {
 const {
     MessageEmbed
 } = require('discord.js');
-const {
-    join
-} = require("path");
 
 const {
     slap,
     awkward
-} = require(join(process.cwd(), '/database/data/actions.json'));
+} = require('../ ../database/data/actions.json');
 const {
     Log
-} = require(join(process.cwd(), '/utils/log.js'));
+} = require('../ ../utils/log.js');
 
 module.exports = {
     data: new SlashCommandBuilder()

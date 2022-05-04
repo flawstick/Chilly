@@ -3,24 +3,21 @@ const {
 	writeFile
 } = require('fs');
 const {
-	join
-} = require('path');
-const {
-	checkMessageJsonArray
-} = require(join(process.cwd(), '/utils/reactions.js'));
-const {
-	Log
-} = require(join(process.cwd(), '/utils/log.js'));
-
-const {
 	SlashCommandBuilder
 } = require('@discordjs/builders');
 const {
-	reaction_roles_json
-} = require(join(process.cwd(), '/config.json'));
-const {
 	Permissions
 } = require('discord.js');
+
+const {
+	checkMessageJsonArray,
+} = require('../ ../utils/reactions.js');
+const {
+	Log
+} = require('../ ../utils/log.js');
+const {
+	reaction_roles_json
+} = require('../ ../config.json');
 
 module.exports = {
 
