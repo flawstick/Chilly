@@ -7,20 +7,16 @@ const {
 } = require('../config.json');
 
 const {
-    client
-} = require('../index');
-
-const {
     welcomeGif
 } = require('../config.json')
 
 
-var channel = null; // Channel variable
+var channel = null; // Logging channel 
 var username = null; // Username of bot
 var avatarURL = null // Avatar of bot
 
 const initLog = async function (client) {
-    channel = await client.channels.fetch(log); // Initialise variable
+    channel = await client.channels.fetch(log); // Set variable
     console.log('[INFO] [LOGGER] Logger initialized!'); // Log initilization
 
     // Store in variables so the application doesn't fetch them every single time it logs
