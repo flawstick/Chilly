@@ -2,6 +2,7 @@ config.json
 src\events\reactions\reaction-roles.json
 node_modules/
 data/
+start.bat
 
 # Build and Release Folders
 bin-debug/
