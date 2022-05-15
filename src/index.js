@@ -13,8 +13,6 @@ const {
 	token,
 	clientId,
 	guildId,
-	reaction_roles,
-	color_roles,
 } = require('../config.json');
 const {
 	Routes
@@ -159,9 +157,6 @@ client.on('interactionCreate', async interaction => {
 // Regiset reaction-roles commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
-
-	// Return if the interactiopn isnt in the command seciton
-	if (interaction.channel.id !== reaction_roles || interaction.channel.id !== color_roles) return;
 
 	// Get command by name
 	const command = client.reactions.get(interaction.commandName);
