@@ -1,5 +1,6 @@
 const {
-    connection
+    connection,
+    pool
 } = require('./connection');
 const {
     levelOneThreshold,
@@ -27,38 +28,43 @@ const addXP = async function (uuid, amount) {
     // Data retrieval query
     const sql = `SELECT * FROM levels WHERE uuid = '${uuid}'`;
 
-    // Execute query
-    connection.query(sql, (error, results, fields) => {
-        if (error) throw error; // Catch error
+    // Create a connection from the connection pool
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
 
-        // Add use to database if id doesn't exist
-        if (results.length == 0) {
-            createEmptyLevelRow(uuid);
-            return;
-        }
-
-        // Database retrieval query
-        const xpsql = `SELECT * FROM levels WHERE uuid = '${uuid}'`;
-
-        // Get the xp and add amount to it
-        connection.query(xpsql, (error, results, fields) => {
+        // Execute query
+        connection.query(sql, (error, results, fields) => {
             if (error) throw error; // Catch error
 
-            // Set added amount of xp
-            let sql = `UPDATE levels SET xp = ${results[0].xp + amount} WHERE uuid = '${uuid}'`;
-
-            // The amount of xp left for level to end
-            const left = getLeftForLevel(results[0].level, results[0].xp);
-
-            // Check if the amount added is less than needed to end level
-            if (left <= amount) {
-                sql = `UPDATE levels SET xp = ${amount - left} WHERE uuid = '${uuid}'` // set xp
-                addLevel(uuid, 1); // add level
+            // Add use to database if id doesn't exist
+            if (results.length == 0) {
+                createEmptyLevelRow(uuid);
+                return;
             }
 
-            // Run the query to change the level
-            connection.query(sql, (error, results, fields) => {
-                if (error) throw error;
+            // Database retrieval query
+            const xpsql = `SELECT * FROM levels WHERE uuid = '${uuid}'`;
+
+            // Get the xp and add amount to it
+            connection.query(xpsql, (error, results, fields) => {
+                if (error) throw error; // Catch error
+
+                // Set added amount of xp
+                let sql = `UPDATE levels SET xp = ${results[0].xp + amount} WHERE uuid = '${uuid}'`;
+
+                // The amount of xp left for level to end
+                const left = getLeftForLevel(results[0].level, results[0].xp);
+
+                // Check if the amount added is less than needed to end level
+                if (left <= amount) {
+                    sql = `UPDATE levels SET xp = ${amount - left} WHERE uuid = '${uuid}'` // set xp
+                    addLevel(uuid, 1); // add level
+                }
+
+                // Run the query to change the level
+                connection.query(sql, (error, results, fields) => {
+                    if (error) throw error;
+                });
             });
         });
     });
@@ -72,44 +78,49 @@ const addLevel = async function (uuid) {
 
     // Execute query
     connection.query(sql, (error, results, fields) => {
-        if (error) return; // Catch error
+        if (error) throw error; // Catch error
 
-        if (results.length != 0) {
+        // Create a connection from the connection pool
+        pool.getConnection(function (err, connection) {
+            if (err) throw err; // Catch error
 
-            // Database update query 
-            const updateSql = `UPDATE levels SET level = ${results[0].level + 1} WHERE uuid = '${uuid}'`;
+            if (results.length != 0) {
 
-            // Execute query
-            connection.query(updateSql, (error, result, fields) => {
-                if (error) return; // Catch error
-            });
+                // Database update query 
+                const updateSql = `UPDATE levels SET level = ${results[0].level + 1} WHERE uuid = '${uuid}'`;
 
-            // Tell people that level has been added to the player.
-            Log(`[INFO] [LEVEL] [ADD]`, `added level to uuid: '${uuid}'`);
-            const channel = client.channels.cache.get(chat);
-            channel.send(`<@${uuid}> you are now level ${results[0].level + 1}! <3`);
+                // Execute query
+                connection.query(updateSql, (error, result, fields) => {
+                    if (error) throw error; // Catch error
+                });
 
-            // Fetch specefic member into cache by id
-            const member = client.guilds.cache.get(guildId).members.cache.get(uuid);
+                // Tell people that level has been added to the player.
+                Log(`[INFO] [LEVEL] [ADD]`, `added level to uuid: '${uuid}'`);
+                const channel = client.channels.cache.get(chat);
+                channel.send(`<@${uuid}> you are now level ${results[0].level + 1}! <3`);
 
-            // UWU JSON OBJECT
-            const uwu = {
-                1: comets,
-                2: moons,
-                3: stars,
-                4: solarSystems,
-                5: neutronStars
-            }
+                // Fetch specefic member into cache by id
+                const member = client.guilds.cache.get(guildId).members.cache.get(uuid);
 
-            // If that member has reached a role advancing thershold
-            if ((results[0].level + 1) % 10 == 0) 
-                
-                // Set the appropriate role to level
-                member.roles.add(uwu[(results[0].level + 1) / 10]); 
-            
+                // UWU JSON OBJECT
+                const uwu = {
+                    1: comets,
+                    2: moons,
+                    3: stars,
+                    4: solarSystems,
+                    5: neutronStars
+                }
 
-        } else // Catch error
-            Log(`[ERROR] [LEVEL] [ADD]`, `Couldn't add level to uuid: '${uuid}'`);
+                // If that member has reached a role advancing thershold
+                if ((results[0].level + 1) % 10 == 0)
+
+                    // Set the appropriate role to level
+                    member.roles.add(uwu[(results[0].level + 1) / 10]);
+
+
+            } else // Catch error
+                Log(`[ERROR] [LEVEL] [ADD]`, `Couldn't add level to uuid: '${uuid}'`);
+        });
     });
 }
 
@@ -133,21 +144,26 @@ const createEmptyLevelRow = async function (uuid) {
     // Data retrieval query
     const sql = `SELECT * FROM levels WHERE uuid = '${uuid}'`;
 
-    // Execute query
-    connection.query(sql, (error, results, fields) => {
-        if (error) throw error; // Catch error
+    // Create a connection from the connection pool
+    pool.getConnection(function (err, connection) {
+        if (err) throw err; // check for errors
 
-        // Check if user exists in table
-        if (results.length == 0) {
+        // Execute query
+        connection.query(sql, (error, results, fields) => {
+            if (error) throw error; // Catch error
 
-            // Database update query
-            const sql = `INSERT INTO levels(uuid, xp, level) VALUES('${uuid}', 0, 0)`;
+            // Check if user exists in table
+            if (results.length == 0) {
 
-            // Add empty level query execute
-            connection.query(sql, (error, results, fields) => {
-                if (error) throw error; // Catch error
-            });
-        }
+                // Database update query
+                const sql = `INSERT INTO levels(uuid, xp, level) VALUES('${uuid}', 0, 0)`;
+
+                // Add empty level query execute
+                connection.query(sql, (error, results, fields) => {
+                    if (error) throw error; // Catch error
+                });
+            }
+        });
     });
 }
 

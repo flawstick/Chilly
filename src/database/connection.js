@@ -7,29 +7,32 @@ const {
 } = require('./data/auth.json');
 
 
-// Initiate connection with the database
-const connection = MySql.createConnection({
-    host: server,
-    user: user,
-    password: password,
-    database: database
-});
+// Make pool varibale 
+var pool;
 
 // Connect the connection to the database
 const init = async function () {
-    connection.connect(function (err) {
-        if (err) return err;
-        console.log(`[DATABASE] [READY] Connected!`);
+
+    // Initialize connection pool with database
+    pool = MySql.createPool({
+        connectionLimit: 10,
+        host: server,
+        user: user,
+        password: password,
+        database: database
     });
+
+    console.log(`[DATABASE] [READY] Connected!`);
+
 }
 
 // Disconnect and load extra data into database
 const disconnect = async function () {
-    connection.end(); // kill connection
+    pool.end(); // kill connection
 }
 
 module.exports = {
     init,
-    connection,
+    pool,
     disconnect
 }
