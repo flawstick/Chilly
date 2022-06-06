@@ -8,23 +8,13 @@ const {
 
 
 // Make pool varibale 
-var pool;
-
-// Connect the connection to the database
-const init = async function () {
-
-    // Initialize connection pool with database
-    pool = MySql.createPool({
-        connectionLimit: 10,
-        host: server,
-        user: user,
-        password: password,
-        database: database
-    });
-
-    console.log(`[DATABASE] [READY] Connected!`);
-
-}
+const pool = MySql.createPool({
+    connectionLimit: 10,
+    host: server,
+    user: user,
+    password: password,
+    database: database
+});
 
 // Disconnect and load extra data into database
 const disconnect = async function () {
@@ -32,7 +22,6 @@ const disconnect = async function () {
 }
 
 module.exports = {
-    init,
     pool,
     disconnect
 }

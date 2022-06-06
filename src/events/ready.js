@@ -5,9 +5,6 @@ const {
     cacheReactionMessages
 } = require('../utils/utils.js');
 const {
-    init
-} = require('../database/connection.js');
-const {
     starboardInit
 } = require('./starboard.js');
 
@@ -23,9 +20,6 @@ module.exports = {
         // Make sure client is ready!
         //////////////////////////////////////////////////////////////////////////
         console.log(`[READY] [READY] [READY] Logged in as ${client.user.tag}`);
-
-        // Initialise database connection and load data
-        await init();
 
         // Initialize log function
         await initLog(client);
