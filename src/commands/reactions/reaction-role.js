@@ -59,11 +59,6 @@ module.exports = {
 		const emoji = await interaction.options.getString('emoji');
 		var max = await interaction.options.getInteger('max');
 
-		// Make sure max isn't null for players to interact
-		if (max === null) {
-			console.log(`[WARN] [REACTION ROLE COMMAND] [NO MAX]`, `No max has been set, set to 50`);
-			max = 50;
-		}
 
 		// Reply to message to get specefic channel
 		const reply = await interaction.reply({
@@ -113,6 +108,12 @@ module.exports = {
 			// Check the existence of the gven message
 			const existance = checkMessageJsonArray(reaction_roles["messages"], messageId);
 			if (existance === false) {
+
+				// Make sure max isn't null for players to interact
+				if (max === null) {
+					console.log(`[WARN] [REACTION ROLE COMMAND] [NO MAX]`, `No max has been set, set to 50`);
+					max = 50;
+				}
 
 				// Add message to json file
 				const reaction_role = '{ ' + JSON.stringify(messageId.toString()) + ' : [{ ' + JSON.stringify(emoji) + ': ' + JSON.stringify(role.id) + ' }], "max": ' + JSON.stringify(max) + '}';
