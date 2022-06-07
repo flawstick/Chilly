@@ -76,50 +76,54 @@ const addLevel = async function (uuid) {
     // Data retrieval query
     const sql = `SELECT * FROM levels WHERE uuid = '${uuid}'`;
 
-    // Execute query
-    connection.query(sql, (error, results, fields) => {
-        if (error) throw error; // Catch error
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
 
-        // Create a connection from the connection pool
-        pool.getConnection(function (err, connection) {
-            if (err) throw err; // Catch error
+        // Execute query
+        connection.query(sql, (error, results, fields) => {
+            if (error) throw error; // Catch error
 
-            if (results.length != 0) {
+            // Create a connection from the connection pool
+            pool.getConnection(function (err, connection) {
+                if (err) throw err; // Catch error
 
-                // Database update query 
-                const updateSql = `UPDATE levels SET level = ${results[0].level + 1} WHERE uuid = '${uuid}'`;
+                if (results.length != 0) {
 
-                // Execute query
-                connection.query(updateSql, (error, result, fields) => {
-                    if (error) throw error; // Catch error
-                });
+                    // Database update query 
+                    const updateSql = `UPDATE levels SET level = ${results[0].level + 1} WHERE uuid = '${uuid}'`;
 
-                // Tell people that level has been added to the player.
-                Log(`[INFO] [LEVEL] [ADD]`, `added level to uuid: '${uuid}'`);
-                const channel = client.channels.cache.get(chat);
-                channel.send(`<@${uuid}> you are now level ${results[0].level + 1}! <3`);
+                    // Execute query
+                    connection.query(updateSql, (error, result, fields) => {
+                        if (error) throw error; // Catch error
+                    });
 
-                // Fetch specefic member into cache by id
-                const member = client.guilds.cache.get(guildId).members.cache.get(uuid);
+                    // Tell people that level has been added to the player.
+                    Log(`[INFO] [LEVEL] [ADD]`, `added level to uuid: '${uuid}'`);
+                    const channel = client.channels.cache.get(chat);
+                    channel.send(`<@${uuid}> you are now level ${results[0].level + 1}! <3`);
 
-                // UWU JSON OBJECT
-                const uwu = {
-                    1: comets,
-                    2: moons,
-                    3: stars,
-                    4: solarSystems,
-                    5: neutronStars
-                }
+                    // Fetch specefic member into cache by id
+                    const member = client.guilds.cache.get(guildId).members.cache.get(uuid);
 
-                // If that member has reached a role advancing thershold
-                if ((results[0].level + 1) % 10 == 0)
+                    // UWU JSON OBJECT
+                    const uwu = {
+                        1: comets,
+                        2: moons,
+                        3: stars,
+                        4: solarSystems,
+                        5: neutronStars
+                    }
 
-                    // Set the appropriate role to level
-                    member.roles.add(uwu[(results[0].level + 1) / 10]);
+                    // If that member has reached a role advancing thershold
+                    if ((results[0].level + 1) % 10 == 0)
+
+                        // Set the appropriate role to level
+                        member.roles.add(uwu[(results[0].level + 1) / 10]);
 
 
-            } else // Catch error
-                Log(`[ERROR] [LEVEL] [ADD]`, `Couldn't add level to uuid: '${uuid}'`);
+                } else // Catch error
+                    Log(`[ERROR] [LEVEL] [ADD]`, `Couldn't add level to uuid: '${uuid}'`);
+            });
         });
     });
 }
