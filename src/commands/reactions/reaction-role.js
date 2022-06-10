@@ -127,6 +127,10 @@ module.exports = {
 				const reaction_role = '{ ' + JSON.stringify(emoji) + ': ' + JSON.stringify(role.id) + ' }';
 				reaction_roles.messages[existance][messageId.toString()].push(JSON.parse(reaction_role));
 
+				// Change max to new assigned value
+				if (max !== null)
+					reaction_roles.messages[existance]["max"] = max;
+
 				// Log to console
 				Log(`[INFO] [REACTION ROLES COMMAND] [REACTION]`, `Added new reaction to message: ${messageId.toString()}`);
 			}
