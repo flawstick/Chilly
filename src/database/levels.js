@@ -30,11 +30,11 @@ const addXP = async function (uuid, amount) {
 
     // Create a connection from the connection pool
     pool.getConnection(function (err, connection) {
-        if (err) throw err;
+        if (err) return console.log(err);
 
         // Execute query
         connection.query(sql, (error, results, fields) => {
-            if (error) throw error; // Catch error
+            if (error) return console.log(error); // Catch error
 
             // Add use to database if id doesn't exist
             if (results.length == 0) {
@@ -47,7 +47,7 @@ const addXP = async function (uuid, amount) {
 
             // Get the xp and add amount to it
             connection.query(xpsql, (error, results, fields) => {
-                if (error) throw error; // Catch error
+                if (error) return console.log(error); // Catch error
 
                 // Set added amount of xp
                 let sql = `UPDATE levels SET xp = ${results[0].xp + amount} WHERE uuid = '${uuid}'`;
@@ -63,7 +63,7 @@ const addXP = async function (uuid, amount) {
 
                 // Run the query to change the level
                 connection.query(sql, (error, results, fields) => {
-                    if (error) throw error;
+                    if (error) return console.log(error);
                 });
             });
         });
@@ -76,13 +76,13 @@ const addLevel = async function (uuid) {
     // Data retrieval query
     const sql = `SELECT * FROM levels WHERE uuid = '${uuid}'`;
 
-    // Execute query
-    connection.query(sql, (error, results, fields) => {
-        if (error) throw error; // Catch error
+    // Create a connection from the connection pool
+    pool.getConnection(function (err, connection) {
+        if (err) return console.log(err); // Catch error
 
-        // Create a connection from the connection pool
-        pool.getConnection(function (err, connection) {
-            if (err) throw err; // Catch error
+        // Execute query
+        connection.query(sql, (error, results, fields) => {
+            if (error) return console.log(error); // Catch error
 
             if (results.length != 0) {
 
@@ -91,7 +91,7 @@ const addLevel = async function (uuid) {
 
                 // Execute query
                 connection.query(updateSql, (error, result, fields) => {
-                    if (error) throw error; // Catch error
+                    if (error) return console.log(error); // Catch error
                 });
 
                 // Tell people that level has been added to the player.
@@ -146,11 +146,11 @@ const createEmptyLevelRow = async function (uuid) {
 
     // Create a connection from the connection pool
     pool.getConnection(function (err, connection) {
-        if (err) throw err; // check for errors
+        if (err) return console.log(err); // check for errors
 
         // Execute query
         connection.query(sql, (error, results, fields) => {
-            if (error) throw error; // Catch error
+            if (error) return console.log(error); // Catch error
 
             // Check if user exists in table
             if (results.length == 0) {
@@ -160,7 +160,7 @@ const createEmptyLevelRow = async function (uuid) {
 
                 // Add empty level query execute
                 connection.query(sql, (error, results, fields) => {
-                    if (error) throw error; // Catch error
+                    if (error) return console.log(error); // Catch error
                 });
             }
         });

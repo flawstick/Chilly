@@ -86,7 +86,7 @@ module.exports = {
 
 		// Add to json
 		readFile(reaction_roles_json, 'utf-8', (err, data) => {
-			if (err) throw err; // catch error
+			if (err) return console.log(err); // catch error
 
 			// Load json data
 			const reaction_roles = JSON.parse(data);
@@ -111,7 +111,7 @@ module.exports = {
 
 			// Write the Json back into the file
 			writeFile(reaction_roles_json, JSON.stringify(reaction_roles), (err) => {
-				if (err) throw err; // Catch error
+				if (err) return console.log(err); // Catch error
 			});
 
 		});

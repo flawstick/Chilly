@@ -21,7 +21,7 @@ module.exports = {
 
         // Read json for message and roles
         readFile(reaction_roles_json, (err, data) => {
-            if (err) throw err;
+            if (err) return console.log(err);
 
             // Parse into json object
             const json = JSON.parse(data);
