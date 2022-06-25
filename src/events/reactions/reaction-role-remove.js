@@ -44,13 +44,13 @@ module.exports = {
 
                         // Add the role to the guild member
                         member.roles.remove(role);
+
+                    // Log to console
+                    Log(`[INFO] [REACTION ROLE] [REMOVE]`, `The role [${role.name}] was removed from the guild member: ${member.user.tag}`);
                 } catch (error) {
                     // Catch HTTP fetch error, cache error
                     Log(`[ERROR] [REACTION ROLE] [REMOVE]`, `Couldn't remove role, Error: ${error}`);
                 }
-
-                // Log to console
-                Log(`[INFO] [REACTION ROLE] [REMOVE]`, `The role [${role.name}] was removed from the guild member: ${member.user.tag}`);
             }
         });
     },
