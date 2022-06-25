@@ -31,19 +31,23 @@ module.exports = {
 
             // If the message exists 
             if (existance !== false) {
+                try {
+                    // Get the role id (see util declaration)
+                    const roleId = getEmojiJsonArray(json["messages"], reaction.emoji.toString(), existance, reaction.message.id);
+                    const member = reaction.message.guild.members.cache.get(user.id); // Get member from user.id
 
-                // Get the role id (see util declaration)
-                const roleId = getEmojiJsonArray(json["messages"], reaction.emoji.toString(), existance, reaction.message.id);
-                const member = reaction.message.guild.members.cache.get(user.id); // Get member from user.id
+                    // Fetch the role using role id
+                    const role = reaction.message.guild.roles.cache.find(r => r.id === roleId);
 
-                // Fetch the role using role id
-                const role = reaction.message.guild.roles.cache.find(r => r.id === roleId);
+                    // check if a member even has the role (exception)
+                    if (member.roles.cache.has(roleId))
 
-                // check if a member even has the role (exception)
-                if (member.roles.cache.has(roleId))
-
-                    // Add the role to the guild member
-                    member.roles.remove(role);
+                        // Add the role to the guild member
+                        member.roles.remove(role);
+                } catch (error) {
+                    // Catch HTTP fetch error, cache error
+                    Log(`[ERROR] [REACTION ROLE] [REMOVE]`, `Couldn't remove role, Error: ${error}`);
+                }
 
                 // Log to console
                 Log(`[INFO] [REACTION ROLE] [REMOVE]`, `The role [${role.name}] was removed from the guild member: ${member.user.tag}`);
